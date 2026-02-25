@@ -3,22 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, FormEvent } from 'react';
 import Link from 'next/link';
-
-/* ── Floating decoration ───────────────────────────────────── */
-const FLOATS = [
-  { emoji: '👶', x: '5%',  y: '8%',  size: 'text-3xl', delay: '0s',   dur: '4s'  },
-  { emoji: '💖', x: '88%', y: '6%',  size: 'text-2xl', delay: '0.5s', dur: '5s'  },
-  { emoji: '⭐', x: '15%', y: '18%', size: 'text-xl',  delay: '1s',   dur: '3.5s'},
-  { emoji: '🍼', x: '80%', y: '20%', size: 'text-2xl', delay: '1.5s', dur: '4.5s'},
-  { emoji: '💛', x: '3%',  y: '42%', size: 'text-xl',  delay: '0.8s', dur: '6s'  },
-  { emoji: '🌸', x: '92%', y: '40%', size: 'text-xl',  delay: '2s',   dur: '4s'  },
-  { emoji: '🧸', x: '8%',  y: '65%', size: 'text-2xl', delay: '0.3s', dur: '5.5s'},
-  { emoji: '💜', x: '85%', y: '62%', size: 'text-xl',  delay: '1.2s', dur: '3.8s'},
-  { emoji: '🌈', x: '20%', y: '80%', size: 'text-2xl', delay: '0.7s', dur: '4.2s'},
-  { emoji: '✨', x: '75%', y: '82%', size: 'text-xl',  delay: '1.8s', dur: '3s'  },
-  { emoji: '🎀', x: '45%', y: '4%',  size: 'text-2xl', delay: '2.5s', dur: '4.8s'},
-  { emoji: '💕', x: '50%', y: '88%', size: 'text-xl',  delay: '0.2s', dur: '5.2s'},
-];
+import FloatingDecor from '../../components/FloatingDecor';
 
 /* ── Input style ───────────────────────────────────────────── */
 const inputClass =
@@ -77,15 +62,7 @@ export default function BabyBetPage() {
         className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden"
         style={{ background: 'linear-gradient(135deg, #FFF0F5 0%, #F8EDFF 40%, #EEF4FF 100%)' }}
       >
-        {FLOATS.map((f, i) => (
-          <div
-            key={i}
-            className={`absolute ${f.size} select-none pointer-events-none`}
-            style={{ left: f.x, top: f.y, animation: `float ${f.dur} ${f.delay} ease-in-out infinite alternate` }}
-          >
-            {f.emoji}
-          </div>
-        ))}
+        <FloatingDecor />
         <div className="text-center relative z-10 bg-white/80 backdrop-blur-md rounded-3xl shadow-xl border-2 border-pink-200 px-10 py-12 max-w-md mx-auto">
           <div className="text-6xl mb-4 animate-bounce">🎉</div>
           <h2 className="text-3xl font-extrabold text-pink-500 mb-3">Pari enregistré !</h2>
@@ -95,7 +72,6 @@ export default function BabyBetPage() {
           </p>
           <p className="text-xs text-gray-400 mt-4">Redirection en cours…</p>
         </div>
-        <style>{`@keyframes float { from { transform: translateY(0); } to { transform: translateY(-12px); } }`}</style>
       </div>
     );
   }
@@ -103,22 +79,12 @@ export default function BabyBetPage() {
   /* ── Main form ─────────────────────────────────────────── */
   return (
     <div
-      className="min-h-screen relative overflow-hidden py-10 px-4"
+      className="min-h-screen relative overflow-hidden py-10 px-4 pb-16"
       style={{ background: 'linear-gradient(135deg, rgb(255, 100, 245) 0%, rgb(100, 150, 200) 45%, rgb(0, 0, 100) 100%)' }}
     >
-      {/* Floating decorations */}
-      {FLOATS.map((f, i) => (
-        <div
-          key={i}
-          className={`absolute ${f.size} select-none pointer-events-none opacity-80`}
-          style={{ left: f.x, top: f.y, animation: `float ${f.dur} ${f.delay} ease-in-out infinite alternate` }}
-        >
-          {f.emoji}
-        </div>
-      ))}
+      <FloatingDecor />
 
       <style>{`
-        @keyframes float { from { transform: translateY(0px) rotate(-2deg); } to { transform: translateY(-14px) rotate(2deg); } }
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(50%) sepia(1) saturate(5) hue-rotate(300deg); }
       `}</style>
 
@@ -372,15 +338,11 @@ export default function BabyBetPage() {
                   Envoi en cours…
                 </span>
               ) : (
-                '🎉 Valider mes paris !'
+                'Valider mes paris !'
               )}
             </button>
           </div>
 
-          {/* Footer note */}
-          <p className="text-center text-xs text-gray-400 pt-1">
-            💌 Avec tout notre amour pour Laura & Flavien
-          </p>
         </form>
       </div>
     </div>

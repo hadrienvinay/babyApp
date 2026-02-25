@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import fs from 'fs';
 import path from 'path';
+import FloatingDecor from '../components/FloatingDecor';
 
 interface Pari {
   id: number;
@@ -16,21 +17,6 @@ interface Pari {
   createdAt: string;
 }
 
-/* ── Floating decorations (server-safe) ─────────────────────── */
-const FLOATS = [
-  { emoji: '👶', x: '4%',  y: '6%',  size: 'text-3xl', delay: '0s',   dur: '4s'  },
-  { emoji: '💖', x: '89%', y: '5%',  size: 'text-2xl', delay: '0.5s', dur: '5s'  },
-  { emoji: '⭐', x: '14%', y: '16%', size: 'text-xl',  delay: '1s',   dur: '3.5s'},
-  { emoji: '🍼',  x: '81%', y: '19%', size: 'text-2xl', delay: '1.5s', dur: '4.5s'},
-  { emoji: '💛', x: '2%',  y: '45%', size: 'text-xl',  delay: '0.8s', dur: '6s'  },
-  { emoji: '🌸', x: '93%', y: '42%', size: 'text-xl',  delay: '2s',   dur: '4s'  },
-  { emoji: '🧸', x: '7%',  y: '68%', size: 'text-2xl', delay: '0.3s', dur: '5.5s'},
-  { emoji: '💜', x: '86%', y: '65%', size: 'text-xl',  delay: '1.2s', dur: '3.8s'},
-  { emoji: '🌈', x: '18%', y: '82%', size: 'text-2xl', delay: '0.7s', dur: '4.2s'},
-  { emoji: '✨', x: '76%', y: '84%', size: 'text-xl',  delay: '1.8s', dur: '3s'  },
-  { emoji: '🎀', x: '46%', y: '3%',  size: 'text-2xl', delay: '2.5s', dur: '4.8s'},
-  { emoji: '💕', x: '51%', y: '90%', size: 'text-xl',  delay: '0.2s', dur: '5.2s'},
-];
 
 /* ── Helpers ────────────────────────────────────────────────── */
 function mode<T>(arr: T[]): T | null {
@@ -77,18 +63,7 @@ export default function ParisPage() {
       className="min-h-screen relative overflow-hidden py-10 px-4"
       style={{ background: 'linear-gradient(135deg, rgb(255, 100, 245) 0%, rgb(100, 150, 200) 45%, rgb(0, 0, 100) 100%)' }}
     >
-      {/* Floating decorations */}
-      {FLOATS.map((f, i) => (
-        <div
-          key={i}
-          className={`fixed ${f.size} select-none pointer-events-none opacity-60`}
-          style={{ left: f.x, top: f.y, animation: `float ${f.dur} ${f.delay} ease-in-out infinite alternate`, zIndex: 0 }}
-        >
-          {f.emoji}
-        </div>
-      ))}
-
-      <style>{`@keyframes float { from { transform: translateY(0px) rotate(-2deg); } to { transform: translateY(-14px) rotate(2deg); } }`}</style>
+      <FloatingDecor />
 
       <div className="relative z-10 max-w-5xl mx-auto space-y-6">
 
@@ -101,7 +76,6 @@ export default function ParisPage() {
             className="px-8 pt-8 pb-7 text-center"
             style={{ background: 'linear-gradient(135deg, #FDE8F0, #F0E4FF)' }}
           >
-            <div className="text-5xl mb-3">👶💕</div>
             <h1
               className="text-3xl sm:text-4xl font-extrabold mb-2"
               style={{
