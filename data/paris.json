@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "parieurName": "Flav",
+    "sexe": "garçon",
+    "date": "2026-05-01",
+    "prenom": "OUIOUI",
+    "poids": "12",
+    "taille": "12",
+    "yeux": "marron",
+    "cheveux": "",
+    "createdAt": "2026-02-25T19:07:47.716Z"
+  }
+]
