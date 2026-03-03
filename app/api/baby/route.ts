@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { Redis } from '@upstash/redis';
 
 interface Pari {
   id: number;
@@ -16,22 +15,10 @@ interface Pari {
   createdAt: string;
 }
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'paris.json');
-
-function readParis(): Pari[] {
-  try {
-    return JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
-  } catch {
-    return [];
-  }
-}
-
-function writeParis(paris: Pari[]) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(paris, null, 2), 'utf-8');
-}
+const redis = Redis.fromEnv();
 
 export async function GET() {
-  const paris = readParis();
+  const paris = await redis.get<Pari[]>('paris') ?? [];
   return NextResponse.json(paris);
 }
 
@@ -40,12 +27,14 @@ export async function POST(req: NextRequest) {
 
   const date = formData.get('date') as string;
   const sexe = formData.get('sexe') as string;
+  const prenom = formData.get('prenom') as string;
 
-  if (!date || !sexe) {
-    return NextResponse.json({ error: 'Date et sexe requis' }, { status: 400 });
+
+  if (!date || !sexe || !prenom) {
+    return NextResponse.json({ error: 'Date, sexe et prénom requis' }, { status: 400 });
   }
 
-  const paris = readParis();
+  const paris = await redis.get<Pari[]>('paris') ?? [];
   const newPari: Pari = {
     id: paris.length > 0 ? Math.max(...paris.map(p => p.id)) + 1 : 1,
     parieurName: (formData.get('parieurName') as string) || '',
@@ -61,7 +50,7 @@ export async function POST(req: NextRequest) {
   };
 
   paris.unshift(newPari);
-  writeParis(paris);
+  await redis.set('paris', paris);
 
   return NextResponse.json({ message: 'Pari créé avec succès', pari: newPari });
 }

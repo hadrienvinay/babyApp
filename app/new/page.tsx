@@ -20,7 +20,7 @@ export default function BabyBetPage() {
     taille: '',
     yeux: '',
     cheveux: '',
-    date: '2026-05-01',
+    date: '2026-04-20',
     prenom: '',
     autres: '',
     parieurName: '',
@@ -209,6 +209,7 @@ export default function BabyBetPage() {
               name="prenom"
               value={formData.prenom}
               onChange={handleChange}
+              required
               placeholder="Ex : Flau Junior, Pesto Vert, Marlo…"
               className={inputClass}
               style={inputStyle}
@@ -303,14 +304,14 @@ export default function BabyBetPage() {
           {/* Autres paris */}
           <div>
             <label className="block text-sm font-bold text-gray-600 mb-2">
-              🎯 Autres paris <span className="font-normal text-gray-400">(optionnel)</span>
+              🎯 Autres paris ou messages <span className="font-normal text-gray-400">(optionnel)</span>
             </label>
             <textarea
               name="autres"
               value={formData.autres}
               onChange={handleChange}
               rows={3}
-              placeholder="Ex : il aura les oreilles de Flavien, elle sera blonde comme Laura, il rira dès la première heure…"
+              placeholder=""
               className={`${inputClass} resize-none`}
               style={inputStyle}
               onFocus={e => e.currentTarget.style.borderColor = '#C084FC'}

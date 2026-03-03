@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import fs from 'fs';
-import path from 'path';
+import { Redis } from '@upstash/redis';
 import FloatingDecor from '../components/FloatingDecor';
 
 interface Pari {
@@ -31,15 +30,14 @@ function avg(arr: number[]): number | null {
   return valid.length ? Math.round(valid.reduce((a, b) => a + b, 0) / valid.length) : null;
 }
 
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
 /* ── Page ───────────────────────────────────────────────────── */
-export default function ParisPage() {
-  const dataFile = path.join(process.cwd(), 'data', 'paris.json');
-  let paris: Pari[] = [];
-  try {
-    paris = JSON.parse(fs.readFileSync(dataFile, 'utf-8'));
-  } catch {
-    paris = [];
-  }
+export default async function ParisPage() {
+  const paris: Pari[] = await redis.get<Pari[]>('paris') ?? [];
 
   const total = paris.length;
   const nbFilles = paris.filter(p => p.sexe === 'fille').length;
@@ -324,11 +322,6 @@ export default function ParisPage() {
             </div>
           </div>
         )}
-
-        {/* Footer note */}
-        <p className="text-center text-sm text-gray-900 pb-4">
-          💌 Avec tout notre amour pour Laura & Flavien
-        </p>
       </div>
     </div>
   );
