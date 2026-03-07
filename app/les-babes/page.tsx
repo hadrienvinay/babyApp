@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import FloatingDecor from '../../components/FloatingDecor';
 
 export default function LesBasesPage() {
@@ -8,7 +9,7 @@ export default function LesBasesPage() {
     >
       <FloatingDecor />
 
-      <div className="relative z-10 max-w-2xl mx-auto space-y-6">
+      <div className="relative z-10 max-w-5xl mx-auto space-y-6">
 
         {/* Header */}
         <div
@@ -36,58 +37,81 @@ export default function LesBasesPage() {
           </div>
         </div>
 
-        {/* Cards */}
+        {/* Cards Laura & Flavien */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[
-            {
-              emoji: '👩',
-              name: 'Laura',
-              description: 'La future maman, rayonnante et impatiente de rencontrer son bébé.',
-              color: '#EC4899',
-              bg: '#FDE8F0',
-              border: '#FBCFE8',
-            },
-            {
-              emoji: '👨',
-              name: 'Flavien',
-              description: 'Le futur papa, prêt à relever le plus beau défi de sa vie.',
-              color: '#A855F7',
-              bg: '#F0E4FF',
-              border: '#E9D5FF',
-            },
-          ].map(card => (
-            <div
-              key={card.name}
-              className="rounded-3xl border-2 p-6 text-center"
-              style={{ background: card.bg, borderColor: card.border, backdropFilter: 'blur(12px)' }}
-            >
-              <div className="text-5xl mb-3">{card.emoji}</div>
-              <h2 className="text-xl font-extrabold mb-2" style={{ color: card.color }}>{card.name}</h2>
-              <p className="text-gray-500 text-sm leading-relaxed">{card.description}</p>
+          <div
+            className="rounded-3xl border-2 overflow-hidden text-center"
+            style={{ background: '#FDE8F0', borderColor: '#FBCFE8' }}
+          >
+            <div className="relative w-full h-70">
+              <Image src="/laura.jpg" alt="Laura" fill className="object-cover object-top" />
+              <div className="absolute inset-0"/>
             </div>
-          ))}
+            <div className="p-5">
+              <h2 className="text-xl font-extrabold mb-1" style={{ color: '#EC4899' }}>Laura</h2>
+              <p className="text-gray-500 text-sm leading-relaxed">La future maman, rayonnante et impatiente de rencontrer son bébé.</p>
+            </div>
+          </div>
+
+          <div
+            className="rounded-3xl border-2 overflow-hidden text-center"
+            style={{ background: '#F0E4FF', borderColor: '#E9D5FF' }}
+          >
+            <div className="relative w-full h-70">
+              <Image src="/flavpr.jpg" alt="Flavien" fill className="object-cover object-top" />
+              <div className="absolute inset-0" />
+            </div>
+            <div className="p-5">
+              <h2 className="text-xl font-extrabold mb-1" style={{ color: '#A855F7' }}>Flavien</h2>
+              <p className="text-gray-500 text-sm leading-relaxed">Le futur papa, prêt à relever le plus beau défi de sa vie.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Galerie couple */}
+        <div
+          className="rounded-3xl border-2 overflow-hidden"
+          style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)', borderColor: '#FBCFE8' }}
+        >
+          <div className="px-6 py-4 border-b text-center" style={{ borderColor: '#FBCFE8', background: 'linear-gradient(135deg, #FDE8F0, #F0E4FF)' }}>
+            <h2 className="font-extrabold text-pink-500 uppercase tracking-widest text-sm">Petit best-of des babes</h2>
+          </div>
+          <div className="grid grid-cols-3 gap-1 p-1">
+            {['/babes.jpg', '/babes2.jpg', '/babes3.jpg'].map((src, i) => (
+              <div key={i} className="relative aspect-square rounded-2xl overflow-hidden">
+                <Image src={src} alt={`Photo ${i + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-500" />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Baby reveal card */}
         <div
-          className="rounded-3xl border-2 p-8 text-center"
+          className="rounded-3xl border-2 overflow-hidden"
           style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)', borderColor: '#FBCFE8' }}
         >
-          <div className="text-4xl mb-4">🍼</div>
-          <h2
-            className="text-xl font-extrabold mb-2"
-            style={{
-              background: 'linear-gradient(135deg, #EC4899, #A855F7)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
-            Le verdict arrive bientôt…
-          </h2>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            Fille ou garçon ? Quel prénom ? Quelle date ?<br />
-            Parie maintenant et on verra si tu avais le nez creux ! 🍀
-          </p>
+          <div className="relative w-full h-48">
+            <Image src="/echographie.jpg" alt="Échographie" fill className="object-cover" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ background: 'rgba(253,232,240,0.75)', backdropFilter: 'blur(2px)' }}>
+              <div className="text-4xl mb-2">🍼</div>
+              <h2
+                className="text-xl font-extrabold"
+                style={{
+                  background: 'linear-gradient(135deg, #EC4899, #A855F7)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Le verdict arrive bientôt…
+              </h2>
+            </div>
+          </div>
+          <div className="p-6 text-center">
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Fille ou garçon ? Quel prénom ? Quelle date ?<br />
+              Parie maintenant et on verra si tu avais le nez creux ! 🍀
+            </p>
+          </div>
         </div>
 
       </div>

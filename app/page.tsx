@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Redis } from '@upstash/redis';
 import FloatingDecor from '../components/FloatingDecor';
 
@@ -95,6 +96,32 @@ export default async function ParisPage() {
             >
               Faire mon pari
             </Link>
+          </div>
+        </div>
+
+        {/* ── Photos ──────────────────────────────────────── */}
+        <div
+          className="rounded-3xl border-2 overflow-hidden"
+          style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)', borderColor: '#FBCFE8' }}
+        >
+          <div className="flex gap-1 p-1 h-64 sm:h-72">
+            <div className="relative flex-1 rounded-2xl overflow-hidden">
+              <Image src="/babes.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="relative flex-1 rounded-2xl overflow-hidden">
+              <Image src="/echographie.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="relative flex-1 rounded-2xl overflow-hidden">
+              <Image src="/pestorosso.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="hidden sm:flex flex-col gap-1 w-1/3">
+              <div className="relative flex-1 rounded-2xl overflow-hidden">
+                <Image src="/babes2.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="relative flex-1 rounded-2xl overflow-hidden">
+                <Image src="/babes3.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+              </div>
+            </div>
           </div>
         </div>
 

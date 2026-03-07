@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV_ITEMS = [
-  { href: '/',           label: 'Les Paris',     emoji: '' },
-  { href: '/new',        label: 'Nouveau pari',  emoji: '' },
-  { href: '/les-babes',  label: 'Les Babes',     emoji: '' },
+  { href: '/',                label: 'Les Paris',    emoji: '' },
+  { href: '/new',             label: 'Nouveau pari', emoji: '' },
+  { href: '/les-babes',       label: 'Les Babes',    emoji: '' },
+  { href: '/liste-naissance', label: 'Liste',        emoji: '🎁' },
 ];
 
 export default function Navbar() {
