@@ -1,6 +1,6 @@
 import { Redis } from '@upstash/redis';
 import { CADEAUX, Contribution } from '@/lib/cadeaux';
-import FloatingDecor from '../../components/FloatingDecor';
+import FloatingDecor from '@/components/FloatingDecor';
 import GiftCard from './GiftCard';
 
 const redis = Redis.fromEnv();

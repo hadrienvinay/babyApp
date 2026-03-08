@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import FloatingDecor from '../../../components/FloatingDecor';
+import FloatingDecor from '@/components/FloatingDecor';
 
 interface Props {
   searchParams: Promise<{ cadeau?: string }>;
