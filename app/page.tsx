@@ -67,43 +67,45 @@ export default async function ParisPage() {
       <div className="relative z-10 max-w-5xl mx-auto space-y-6">
 
         {/* ── Header card ─────────────────────────────────── */}
-        <div
-          className="rounded-3xl shadow-2xl overflow-hidden border-2"
-          style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)', borderColor: '#FBCFE8' }}
-        >
-          <div
-            className="px-8 pt-8 pb-7 text-center"
-            style={{ background: 'linear-gradient(135deg, #FDE8F0, #F0E4FF)' }}
-          >
-            <h1
-              className="text-3xl sm:text-4xl font-extrabold mb-2"
-              style={{
-                background: 'linear-gradient(135deg, #EC4899, #A855F7)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              Les Paris des Babes !
-            </h1>
-            <p className="text-gray-500 text-md mb-5">
-              Laura & Flavien attendent l&apos;heureux événement 🌸 —{' '}
-              <span className="font-semibold text-pink-400">{total} pari{total > 1 ? 's' : ''} enregistré{total > 1 ? 's' : ''}</span>
-            </p>
-            <Link
-              href="/new"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-white text-md font-bold transition-all hover:scale-105 active:scale-95"
-              style={{ background: 'linear-gradient(135deg, #EC4899, #A855F7)', boxShadow: '0 4px 18px rgba(236,72,153,0.3)' }}
-            >
-              Faire mon pari
-            </Link>
+        <div className="rounded-3xl shadow-2xl overflow-hidden border-2" style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)', borderColor: '#FBCFE8' }}>
+          <div className="flex items-center gap-4 px-8 pt-8 pb-7" style={{ background: 'linear-gradient(135deg, #FDE8F0, #F0E4FF)' }}>
+            {/* Image à gauche */}
+            <div className="hidden sm:block relative w-36 h-44 flex-shrink-0 rounded-2xl overflow-hidden shadow-lg">
+              <Image src="/flavien.JPG" alt="Flavien" fill className="object-cover object-top" />
+            </div>
+            {/* Texte au centre */}
+            <div className="flex-1 text-center">
+              <h1 className="text-3xl sm:text-4xl font-extrabold mb-2"
+                style={{
+                  background: 'linear-gradient(135deg, #EC4899, #A855F7)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
+                Le Pari des Babes !
+              </h1>
+              <p className="text-gray-500 text-md mb-5">
+                Laura & Flavien attendent l&apos;heureux événement
+                <br />
+                Qui sera le prochain frère ou la prochaine soeur du PR adoré ?
+                <br />
+                {' '}
+                <span className="font-semibold text-pink-400">{total} pari{total > 1 ? 's' : ''} enregistré{total > 1 ? 's' : ''}</span>
+              </p>
+              <Link
+                href="/new" className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-white text-md font-bold transition-all hover:scale-105 active:scale-95"
+                style={{ background: 'linear-gradient(135deg, #EC4899, #A855F7)', boxShadow: '0 4px 18px rgba(236,72,153,0.3)' }}>
+                Faire mon pari
+              </Link>
+            </div>
+            {/* Image à droite */}
+            <div className="hidden sm:block relative w-36 h-44 flex-shrink-0 rounded-2xl overflow-hidden shadow-lg">
+              <Image src="/laura2.jpg" alt="Flavien" fill className="object-cover object-top" />
+            </div>
           </div>
         </div>
 
         {/* ── Photos ──────────────────────────────────────── */}
-        <div
-          className="rounded-3xl border-2 overflow-hidden"
-          style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)', borderColor: '#FBCFE8' }}
-        >
+        <div className="rounded-3xl border-2 overflow-hidden" style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)', borderColor: '#FBCFE8' }}>
           <div className="flex gap-1 p-1 h-64 sm:h-72">
             <div className="relative flex-1 rounded-2xl overflow-hidden">
               <Image src="/babes.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
@@ -131,10 +133,7 @@ export default async function ParisPage() {
             <h2 className="text-md font-bold tracking-widest uppercase text-pink-400 px-1">📊 Statistiques</h2>
 
             {/* Gender bar */}
-            <div
-              className="rounded-3xl border-2 p-5"
-              style={{ background: 'rgba(255,255,255,0.88)', borderColor: '#FBCFE8', backdropFilter: 'blur(12px)' }}
-            >
+            <div className="rounded-3xl border-2 p-5" style={{ background: 'rgba(255,255,255,0.88)', borderColor: '#FBCFE8', backdropFilter: 'blur(12px)' }}>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <span className="text-2xl">👧</span>

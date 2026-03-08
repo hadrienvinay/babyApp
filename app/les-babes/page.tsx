@@ -43,7 +43,7 @@ export default function LesBasesPage() {
             className="rounded-3xl border-2 overflow-hidden text-center"
             style={{ background: '#FDE8F0', borderColor: '#FBCFE8' }}
           >
-            <div className="relative w-full h-70">
+            <div className="relative w-full h-100">
               <Image src="/laura.jpg" alt="Laura" fill className="object-cover object-top" />
               <div className="absolute inset-0"/>
             </div>
@@ -57,7 +57,7 @@ export default function LesBasesPage() {
             className="rounded-3xl border-2 overflow-hidden text-center"
             style={{ background: '#F0E4FF', borderColor: '#E9D5FF' }}
           >
-            <div className="relative w-full h-70">
+            <div className="relative w-full h-100">
               <Image src="/flavpr.jpg" alt="Flavien" fill className="object-cover object-top" />
               <div className="absolute inset-0" />
             </div>
