@@ -32,7 +32,7 @@ export default function LesBasesPage() {
             </h1>
             <p className="text-gray-500 text-base leading-relaxed">
               Laura & Flavien attendent leur petit bout de chou 🌸<br />
-              Tout le monde est invité à parier sur qui il sera !
+              Tout le monde est invité à parier sur le sexe du bébé, sa date de naissances, son prénom ou autres données pour les plus inspirés.
             </p>
           </div>
         </div>
@@ -49,7 +49,7 @@ export default function LesBasesPage() {
             </div>
             <div className="p-5">
               <h2 className="text-xl font-extrabold mb-1" style={{ color: '#EC4899' }}>Laura</h2>
-              <p className="text-gray-500 text-sm leading-relaxed">La future maman, rayonnante et impatiente de rencontrer son bébé.</p>
+              <p className="text-gray-500 text-sm leading-relaxed">La future maman, notre babe nationnale, toujours radieuse et souriante. Bon courage pour cette dernière ligne droite !</p>
             </div>
           </div>
 
@@ -63,7 +63,7 @@ export default function LesBasesPage() {
             </div>
             <div className="p-5">
               <h2 className="text-xl font-extrabold mb-1" style={{ color: '#A855F7' }}>Flavien</h2>
-              <p className="text-gray-500 text-sm leading-relaxed">Le futur papa, prêt à relever le plus beau défi de sa vie.</p>
+              <p className="text-gray-500 text-sm leading-relaxed">Le futur papa, qui s'est bien entrainé avec Pesto Rosse, est prêt à relever le plus beau défi de sa vie.</p>
             </div>
           </div>
         </div>
