@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { href: '/',                label: 'Les Paris',    emoji: '' },
   { href: '/new',             label: 'Nouveau pari', emoji: '' },
   { href: '/les-babes',       label: 'Les Babes',    emoji: '' },
-  { href: '/liste-naissance', label: 'Liste',        emoji: '🎁' },
+ // { href: '/liste-naissance', label: 'Liste',        emoji: '🎁' },
 ];
 
 export default function Navbar() {

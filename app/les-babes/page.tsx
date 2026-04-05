@@ -63,7 +63,7 @@ export default function LesBasesPage() {
             </div>
             <div className="p-5">
               <h2 className="text-xl font-extrabold mb-1" style={{ color: '#A855F7' }}>Flavien</h2>
-              <p className="text-gray-500 text-sm leading-relaxed">Le futur papa, qui s'est bien entrainé avec Pesto Rosse, est prêt à relever le plus beau défi de sa vie.</p>
+              <p className="text-gray-500 text-sm leading-relaxed">Le futur papa, qui s'est bien entrainé avec Pesto Rosso, est prêt à relever le plus beau défi de sa vie.</p>
             </div>
           </div>
         </div>

@@ -88,6 +88,8 @@ export default async function ParisPage() {
                 <br />
                 Qui sera le prochain frère ou la prochaine soeur du PR adoré ?
                 <br />
+                Grosse récompense à la clé pour le meilleur pari
+                <br />
                 {' '}
                 <span className="font-semibold text-pink-400">{total} pari{total > 1 ? 's' : ''} enregistré{total > 1 ? 's' : ''}</span>
               </p>
@@ -99,7 +101,7 @@ export default async function ParisPage() {
             </div>
             {/* Image à droite */}
             <div className="hidden sm:block relative w-36 h-44 flex-shrink-0 rounded-2xl overflow-hidden shadow-lg">
-              <Image src="/laura2.jpg" alt="Flavien" fill className="object-cover object-top" />
+              <Image src="/laulau.jpeg" alt="Laura" fill className="object-cover object-top" />
             </div>
           </div>
         </div>
@@ -118,10 +120,10 @@ export default async function ParisPage() {
             </div>
             <div className="hidden sm:flex flex-col gap-1 w-1/3">
               <div className="relative flex-1 rounded-2xl overflow-hidden">
-                <Image src="/babes2.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                <Image src="/babes3.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="relative flex-1 rounded-2xl overflow-hidden">
-                <Image src="/babes3.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                <Image src="/flav_lunettes.jpeg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
               </div>
             </div>
           </div>
