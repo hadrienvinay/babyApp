@@ -6,6 +6,18 @@ import Footer from '../components/Footer';
 export const metadata: Metadata = {
   title: 'Les Paris des Babes ',
   description: 'Pariez sur le futur bébé de Laura & Flavien !',
+  openGraph: {
+    title: 'Les Paris des Babes',
+    description: 'Pariez sur le futur bébé de Laura & Flavien !',
+    images: [
+      {
+        url: '/home.png',
+        width: 1200,
+        height: 630,
+        alt: 'Les Paris des Babes',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

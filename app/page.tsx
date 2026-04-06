@@ -120,10 +120,10 @@ export default async function ParisPage() {
             </div>
             <div className="hidden sm:flex flex-col gap-1 w-1/3">
               <div className="relative flex-1 rounded-2xl overflow-hidden">
-                <Image src="/babes3.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                <Image src="/babes2.jpg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="relative flex-1 rounded-2xl overflow-hidden">
-                <Image src="/flav_lunettes.jpeg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                <Image src="/flav_spider.jpeg" alt="Laura & Flavien" fill className="object-cover hover:scale-105 transition-transform duration-500" />
               </div>
             </div>
           </div>
@@ -260,7 +260,7 @@ export default async function ParisPage() {
               <table className="w-full text-md">
                 <thead>
                   <tr style={{ background: 'rgba(252,231,243,0.4)' }}>
-                    {['Parieur', 'Sexe', 'Prénom', 'Date', 'Poids', 'Taille', 'Yeux', 'Cheveux'].map(h => (
+                    {['Parieur', 'Sexe', 'Prénom', 'Date', 'Poids', 'Taille', 'Yeux', 'Cheveux', '🎯 Autres'].map(h => (
                       <th key={h} className="px-4 py-3 text-left text-sm font-bold uppercase tracking-wider text-pink-400">
                         {h}
                       </th>
@@ -300,6 +300,9 @@ export default async function ParisPage() {
                         </td>
                         <td className="px-4 py-3 text-gray-600 capitalize">
                           {pari.cheveux ? `${HAIR_EMOJI[pari.cheveux] ?? '💇'} ${pari.cheveux}` : '—'}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500 italic text-sm max-w-[200px]">
+                          {pari.autres || '—'}
                         </td>
                       </tr>
                     );
