@@ -82,8 +82,10 @@
       padding: 10px 22px;
       font-size: .95rem;
       font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .hero-fact span { margin-right: 6px; }
 
     /* ── CONTAINER ── */
     .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
@@ -157,7 +159,12 @@
       gap: 16px;
       box-shadow: 0 4px 16px rgba(240,180,41,.15);
     }
-    .winner-medal { font-size: 2.5rem; }
+    .winner-medal { font-size: 2.5rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; width:48px; height:48px; }
+    .section-title .icon { display:flex; align-items:center; justify-content:center; }
+    .stat-card .stat-icon { display:flex; align-items:center; justify-content:center; margin-bottom:8px; font-size:0; }
+    .accuracy-icon { display:flex; align-items:center; justify-content:center; font-size:0; }
+    .hero-fact svg, .stat-icon svg, .accuracy-icon svg,
+    .winner-medal svg, .section-title .icon svg, .fab-btn svg, .fab-item svg { display:block; flex-shrink:0; }
     .winner-name { font-size: 1.1rem; font-weight: 700; }
     .winner-detail { font-size: .85rem; color: var(--gray); margin-top: 2px; }
     .winner-score {
@@ -268,6 +275,44 @@
       line-height: 1.5;
     }
 
+    /* ── LEADERBOARD ── */
+    .lb-list { display:flex; flex-direction:column; gap:5px; }
+    .lb-item {
+      display:flex; align-items:center; gap:12px;
+      background:var(--white); border-radius:12px;
+      padding:11px 18px; box-shadow:var(--shadow);
+      transition:transform .15s;
+    }
+    .lb-item:hover { transform:translateX(3px); }
+    .lb-rank {
+      font-size:.95rem; font-weight:800; width:26px;
+      text-align:center; color:var(--gray); flex-shrink:0;
+    }
+    .lb-rank.r1 { color:#d97706; font-size:1.1rem; }
+    .lb-rank.r2 { color:#94a3b8; font-size:1.05rem; }
+    .lb-rank.r3 { color:#b07644; }
+    .lb-name { font-weight:600; font-size:.88rem; min-width:90px; flex-shrink:0; }
+    .lb-pips { display:flex; gap:4px; flex-wrap:wrap; flex:1; }
+    .lb-pip {
+      font-size:.65rem; font-weight:700; border-radius:50px;
+      padding:2px 7px; background:#f3f4f6; color:#9ca3af;
+    }
+    .lb-pip.hit { background:#d1fae5; color:#065f46; }
+    .lb-pip.partial { background:#fef9ec; color:#92400e; }
+    .lb-bar-wrap {
+      width:100px; height:5px; background:#f3f4f6;
+      border-radius:50px; overflow:hidden; flex-shrink:0;
+    }
+    .lb-bar { height:100%; border-radius:50px; }
+    .lb-score-val {
+      font-weight:800; font-size:.95rem;
+      min-width:46px; text-align:right; flex-shrink:0;
+    }
+    .score-badge {
+      font-size:.68rem; font-weight:800; border-radius:50px;
+      padding:3px 9px; white-space:nowrap;
+    }
+
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -283,10 +328,73 @@
       .hero-emoji { font-size: 56px; }
     }
 
+    /* ── FAB DOWNLOAD ── */
+    .fab-wrap {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .fab-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity .2s, transform .2s;
+    }
+    .fab-wrap.open .fab-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .fab-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: none;
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-family: inherit;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+      text-decoration: none;
+      color: var(--text);
+      transition: transform .15s, box-shadow .15s;
+      white-space: nowrap;
+    }
+    .fab-item:hover { transform: translateX(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.16); }
+    .fab-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      border: none;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(74,144,217,.4);
+      transition: transform .15s, box-shadow .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .fab-btn:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(74,144,217,.5); }
+
     /* ── PRINT ── */
     @media print {
-      .messages-filter { display: none; }
+      .fab-wrap, .messages-filter { display: none !important; }
       .msg-card { break-inside: avoid; }
+      body { background: #fff; }
     }
   </style>
 </head>
@@ -300,12 +408,13 @@
   <h1>Bienvenue, Charlie !</h1>
   <p class="hero-sub">Le grand bilan des paris — 74 parieurs, un seul vainqueur !</p>
   <div class="hero-facts">
-    <div class="hero-fact"><span>👦</span>Garçon</div>
-    <div class="hero-fact"><span>💙</span>Charlie</div>
-    <div class="hero-fact"><span>⚖️</span>2,8 kg</div>
-    <div class="hero-fact"><span>👀</span>Yeux marron</div>
-    <div class="hero-fact"><span>🌙</span>Un peu de cheveux</div>
-    <div class="hero-fact"><span>📅</span>Né le 6 mai 2026</div>
+    <div class="hero-fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Garçon</div>
+    <div class="hero-fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Charlie</div>
+    <div class="hero-fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>2,8 kg</div>
+    <div class="hero-fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>Yeux marron</div>
+    <div class="hero-fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>46 cm</div>
+    <div class="hero-fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>Un peu de cheveux</div>
+    <div class="hero-fact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Né le 6 mai 2026</div>
   </div>
 </div>
 
@@ -316,37 +425,37 @@
 ═══════════════════════════════════════ -->
 <section>
   <div class="section-title">
-    <div class="icon" style="background:#e8f2fc">📊</div>
+    <div class="icon" style="background:#e8f2fc;color:var(--blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
     Chiffres clés
   </div>
   <div class="stats-grid">
     <div class="stat-card blue">
-      <div class="stat-icon">🎯</div>
+      <div class="stat-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
       <div class="stat-value">74</div>
       <div class="stat-label">Parieurs</div>
     </div>
     <div class="stat-card green">
-      <div class="stat-icon">👦</div>
+      <div class="stat-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
       <div class="stat-value">59 %</div>
       <div class="stat-label">Ont parié garçon</div>
     </div>
     <div class="stat-card gold">
-      <div class="stat-icon">⚖️</div>
+      <div class="stat-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
       <div class="stat-value" id="avg-weight">—</div>
       <div class="stat-label">Poids moyen prédit</div>
     </div>
     <div class="stat-card pink">
-      <div class="stat-icon">📏</div>
+      <div class="stat-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg></div>
       <div class="stat-value" id="avg-height">—</div>
       <div class="stat-label">Taille moyenne prédite</div>
     </div>
     <div class="stat-card blue">
-      <div class="stat-icon">📅</div>
+      <div class="stat-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
       <div class="stat-value">6 mai</div>
       <div class="stat-label">Vraie date de naissance</div>
     </div>
     <div class="stat-card green">
-      <div class="stat-icon">💬</div>
+      <div class="stat-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg></div>
       <div class="stat-value" id="msg-count">—</div>
       <div class="stat-label">Messages laissés</div>
     </div>
@@ -358,12 +467,12 @@
 ═══════════════════════════════════════ -->
 <section>
   <div class="section-title">
-    <div class="icon" style="background:#fef9ec">🏆</div>
+    <div class="icon" style="background:#fef9ec;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
     Les plus proches du but
   </div>
 
   <div style="background:linear-gradient(135deg,#fef9ec,#fff8e1);border:2px solid var(--gold);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">
-    <span style="font-size:2rem;">🎉</span>
+    <div style="width:44px;height:44px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
     <div>
       <div style="font-weight:700;font-size:1.05rem;">Charlie est né le <strong>6 mai 2026</strong> !</div>
       <div style="font-size:.88rem;color:var(--gray);margin-top:2px;">2 800 g · yeux marron · un peu de cheveux · 5 parieurs avaient deviné la bonne date</div>
@@ -372,7 +481,7 @@
 
   <div class="winners-grid">
     <div class="winner-card" style="border-color:#7c3aed;background:linear-gradient(135deg,#ede9fe,#fff);">
-      <div class="winner-medal">🏆</div>
+      <div class="winner-medal" style="background:#ede9fe;border-radius:14px;color:#7c3aed"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
       <div>
         <div class="winner-name">Dianou · Marie Laure · Mel · Aggl</div>
         <div class="winner-detail">Date <strong>exacte</strong> (6 mai) + <strong>sexe exact</strong> (garçon) — les grands gagnants !</div>
@@ -380,55 +489,70 @@
       <div class="winner-score" style="background:#7c3aed;">Date + Sexe ✓</div>
     </div>
     <div class="winner-card">
-      <div class="winner-medal">🥇</div>
+      <div class="winner-medal" style="background:#fef9ec;border-radius:14px;color:#b45309"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
       <div>
         <div class="winner-name">Jazz</div>
         <div class="winner-detail">Poids prédit : 2 856 g → écart de seulement <strong>56 g</strong> sur 2 800 g !</div>
       </div>
-      <div class="winner-score">Poids ⚖️</div>
+      <div class="winner-score">Poids</div>
     </div>
     <div class="winner-card">
-      <div class="winner-medal">🥈</div>
+      <div class="winner-medal" style="background:#f3f4f6;border-radius:14px;color:#6b7280"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
       <div>
         <div class="winner-name">Soso · Chrissou · Alexandre</div>
         <div class="winner-detail">Poids prédit : 2 900 g → écart de 100 g</div>
       </div>
-      <div class="winner-score">Poids ⚖️</div>
+      <div class="winner-score">Poids</div>
+    </div>
+    <div class="winner-card" style="border-color:#38b2a3;background:linear-gradient(135deg,#e6f7f5,#fff);">
+      <div class="winner-medal" style="background:#e6f7f5;border-radius:14px;color:#38b2a3"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg></div>
+      <div>
+        <div class="winner-name">MA</div>
+        <div class="winner-detail">Taille prédite : <strong>46 cm</strong> — taille exacte de Charlie !</div>
+      </div>
+      <div class="winner-score" style="background:var(--green);">Taille ✓</div>
     </div>
     <div class="winner-card" style="border-color:#4a90d9;background:linear-gradient(135deg,#e8f2fc,#fff);">
-      <div class="winner-medal">🎯</div>
+      <div class="winner-medal" style="background:#e8f2fc;border-radius:14px;color:#4a90d9"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
       <div>
         <div class="winner-name">HUUUUURE</div>
-        <div class="winner-detail">A prédit la bonne date (6 mai) mais avait parié fille 😅</div>
+        <div class="winner-detail">A prédit la bonne date (6 mai) mais avait parié fille</div>
       </div>
-      <div class="winner-score" style="background:var(--blue);">Date seule 📅</div>
+      <div class="winner-score" style="background:var(--blue);">Date seule</div>
     </div>
   </div>
 
   <div class="accuracy-row">
     <div class="accuracy-card">
-      <div class="accuracy-icon">👶</div>
+      <div class="accuracy-icon" style="color:var(--blue)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
       <div>
         <div class="accuracy-label">Sexe — Charlie est un garçon</div>
         <div class="accuracy-value">44/74 l'ont deviné <span class="badge badge-green">59 %</span></div>
       </div>
     </div>
     <div class="accuracy-card">
-      <div class="accuracy-icon">⚖️</div>
+      <div class="accuracy-icon" style="color:var(--gold)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
       <div>
         <div class="accuracy-label">Poids réel : 2 800 g</div>
         <div class="accuracy-value">Moy. prédite : <strong id="avg-w2">—</strong> g</div>
       </div>
     </div>
     <div class="accuracy-card">
-      <div class="accuracy-icon">👀</div>
+      <div class="accuracy-icon" style="color:var(--green)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg></div>
+      <div>
+        <div class="accuracy-label">Taille réelle : 46 cm</div>
+        <div class="accuracy-value">Moy. prédite : <strong id="avg-h2">—</strong> cm · <span class="badge badge-green">MA : exact !</span></div>
+      </div>
+    </div>
+    <div class="accuracy-card">
+      <div class="accuracy-icon" style="color:#7c3aed"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
       <div>
         <div class="accuracy-label">Yeux — marron</div>
         <div class="accuracy-value">51/73 l'ont prédit <span class="badge badge-green">70 %</span></div>
       </div>
     </div>
     <div class="accuracy-card">
-      <div class="accuracy-icon">🌙</div>
+      <div class="accuracy-icon" style="color:var(--pink)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
       <div>
         <div class="accuracy-label">Cheveux — un peu (brun/noir)</div>
         <div class="accuracy-value">47 ont dit brun, 3 noir</div>
@@ -442,20 +566,20 @@
 ═══════════════════════════════════════ -->
 <section>
   <div class="section-title">
-    <div class="icon" style="background:#e8f2fc">📈</div>
+    <div class="icon" style="background:#e8f2fc;color:var(--blue)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
     Résultats des paris
   </div>
   <div class="chart-grid">
 
     <div class="chart-card">
-      <h3>👦👧 Sexe prédit</h3>
+      <h3>Sexe prédit</h3>
       <div class="chart-wrapper" style="max-width:260px; margin:0 auto;">
         <canvas id="chartSexe"></canvas>
       </div>
     </div>
 
     <div class="chart-card" style="grid-column: span 2;">
-      <h3>📅 Distribution des dates pariées <span style="background:#fef9ec;color:#b45309;border-radius:50px;padding:2px 10px;font-size:.78rem;font-weight:700;margin-left:6px;">🌟 6 mai = vraie date</span></h3>
+      <h3>Distribution des dates pariées <span style="background:#fef9ec;color:#b45309;border-radius:50px;padding:2px 10px;font-size:.78rem;font-weight:700;margin-left:6px;">6 mai = vraie date</span></h3>
       <div class="chart-wrapper">
         <canvas id="chartDate" height="90"></canvas>
       </div>
@@ -469,13 +593,13 @@
 ═══════════════════════════════════════ -->
 <section>
   <div class="section-title">
-    <div class="icon" style="background:#e6f7f5">📏</div>
+    <div class="icon" style="background:#e6f7f5;color:var(--green)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg></div>
     Poids &amp; Taille prédits
   </div>
   <div class="chart-grid">
 
     <div class="chart-card">
-      <h3>⚖️ Répartition des poids prédits (g)</h3>
+      <h3>Répartition des poids prédits (g)</h3>
       <div class="chart-wrapper">
         <canvas id="chartPoids" height="160"></canvas>
       </div>
@@ -485,10 +609,13 @@
     </div>
 
     <div class="chart-card">
-      <h3>📏 Répartition des tailles prédites (cm)</h3>
+      <h3>Répartition des tailles prédites (cm)</h3>
       <div class="chart-wrapper">
         <canvas id="chartTaille" height="160"></canvas>
       </div>
+      <p style="font-size:.78rem;color:var(--gray);margin-top:12px;text-align:center;">
+        La ligne verte représente la vraie taille de Charlie (46 cm)
+      </p>
     </div>
 
   </div>
@@ -499,20 +626,20 @@
 ═══════════════════════════════════════ -->
 <section>
   <div class="section-title">
-    <div class="icon" style="background:#fce8f3">✨</div>
+    <div class="icon" style="background:#fce8f3;color:var(--pink)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3z"/></svg></div>
     Pronostics physiques
   </div>
   <div class="chart-grid">
 
     <div class="chart-card">
-      <h3>👀 Couleur des yeux pariée</h3>
+      <h3>Couleur des yeux pariée</h3>
       <div class="chart-wrapper" style="max-width:280px;margin:0 auto;">
         <canvas id="chartYeux"></canvas>
       </div>
     </div>
 
     <div class="chart-card">
-      <h3>💇 Type de cheveux parié</h3>
+      <h3>Type de cheveux parié</h3>
       <div class="chart-wrapper" style="max-width:280px;margin:0 auto;">
         <canvas id="chartCheveux"></canvas>
       </div>
@@ -526,10 +653,22 @@
 ═══════════════════════════════════════ -->
 <section>
   <div class="section-title">
-    <div class="icon" style="background:#fef9ec">💫</div>
+    <div class="icon" style="background:#fef9ec;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
     Prénoms proposés (top suggestions)
   </div>
   <div id="prenoms-cloud" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CLASSEMENT
+═══════════════════════════════════════ -->
+<section>
+  <div class="section-title">
+    <div class="icon" style="background:#fef9ec;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+    Classement — score de ressemblance avec Charlie
+  </div>
+  <p style="font-size:.85rem;color:var(--gray);margin-bottom:20px;">Score sur 100 pts : sexe (20) · date (30) · poids (20) · taille (20) · yeux (5) · cheveux (5)</p>
+  <div id="leaderboard"></div>
 </section>
 
 <!-- ══════════════════════════════════════
@@ -537,15 +676,15 @@
 ═══════════════════════════════════════ -->
 <section>
   <div class="section-title">
-    <div class="icon" style="background:#e6f7f5">💬</div>
+    <div class="icon" style="background:#e6f7f5;color:var(--green)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg></div>
     Messages &amp; commentaires
   </div>
 
   <div class="messages-filter">
     <button class="filter-btn active" onclick="filterMsg('all', this)">Tous (74)</button>
-    <button class="filter-btn" onclick="filterMsg('garcon', this)">👦 Garçon (44)</button>
-    <button class="filter-btn" onclick="filterMsg('fille', this)">👧 Fille (30)</button>
-    <button class="filter-btn" onclick="filterMsg('msg', this)">💬 Avec message</button>
+    <button class="filter-btn" onclick="filterMsg('garcon', this)">Garçon (44)</button>
+    <button class="filter-btn" onclick="filterMsg('fille', this)">Fille (30)</button>
+    <button class="filter-btn" onclick="filterMsg('msg', this)">Avec message</button>
   </div>
 
   <div class="messages-grid" id="messages-grid"></div>
@@ -553,8 +692,17 @@
 
 </div><!-- /container -->
 
+<!-- ══ FAB ══ -->
+<div class="fab-wrap" id="fabWrap">
+  <div class="fab-menu" id="fabMenu">
+    <button class="fab-item" onclick="window.print()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Enregistrer en PDF</button>
+    <a class="fab-item" href="charlie-bilan.html" download="bilan-charlie.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Télécharger le HTML</a>
+  </div>
+  <button class="fab-btn" onclick="document.getElementById('fabWrap').classList.toggle('open')" title="Télécharger"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+</div>
+
 <footer>
-  <p>Fait avec <span class="heart">♥</span> pour fêter l'arrivée de Charlie — 2026</p>
+  <p>Fait avec <span class="heart"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:inline;vertical-align:middle"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span> pour fêter l'arrivée de Charlie — 2026</p>
 </footer>
 
 <script>
@@ -658,6 +806,50 @@ function normH(raw) {
   if (isNaN(v)) return null;
   if (v >= 40 && v <= 60) return v;
   return null; // obvious jokes (80, 100, 30, 36, 65, 13) excluded
+}
+
+/* ══════════════════════════════════════
+   SCORE
+═══════════════════════════════════════ */
+function calcScore(d) {
+  const REAL = { sexe:'garçon', date:'2026-05-06', poids:2800, taille:46 };
+  let s = {}, total = 0;
+
+  // Sexe — 20 pts
+  s.sexe = d.sexe === REAL.sexe ? 20 : 0;
+
+  // Date — 30 pts (-3 par jour d'écart, min 0)
+  const days = Math.abs((new Date(d.date) - new Date(REAL.date)) / 86400000);
+  s.date = Math.max(0, Math.round(30 - days * 3));
+
+  // Poids — 20 pts (linéaire sur 1 000 g d'écart max)
+  const w = normW(d.poids);
+  s.poids = w ? Math.max(0, Math.round(20 * (1 - Math.abs(w - REAL.poids) / 1000))) : 0;
+
+  // Taille — 20 pts (-4 pts par cm d'écart)
+  const h = normH(d.taille);
+  s.taille = h ? Math.max(0, 20 - Math.round(Math.abs(h - REAL.taille)) * 4) : 0;
+
+  // Yeux — 5 pts
+  s.yeux = d.yeux === 'marron' ? 5 : 0;
+
+  // Cheveux — 5 pts (brun/noir = exact, chauve = proche)
+  s.cheveux = (d.cheveux==='brun'||d.cheveux==='noir') ? 5 : d.cheveux==='chauve' ? 2 : 0;
+
+  total = s.sexe + s.date + s.poids + s.taille + s.yeux + s.cheveux;
+  return { total, s };
+}
+
+const RANKED = DATA.map(d => ({ ...d, ...calcScore(d) }))
+                   .sort((a, b) => b.total - a.total);
+
+const MAX_SCORE = 100; // 20+30+20+20+5+5
+
+function scoreStyle(n) {
+  if (n >= 80) return { bg:'#d1fae5', color:'#065f46' };
+  if (n >= 65) return { bg:'#dbeafe', color:'#1e40af' };
+  if (n >= 50) return { bg:'#fef9ec', color:'#92400e' };
+  return { bg:'#f3f4f6', color:'#6b7280' };
 }
 
 /* ══════════════════════════════════════
@@ -793,14 +985,23 @@ new Chart(document.getElementById('chartSexe'), {
   const bins = [[44,46],[46,48],[48,50],[50,52],[52,54],[54,57]];
   const labels = bins.map(([a,b])=>`${a}–${b} cm`);
   const counts = bins.map(([a,b]) => heights.filter(h=>h>=a&&h<b).length);
+  // 46 cm falls in the [46,48] bin (h>=46 && h<48)
+  const realBinIndex = bins.findIndex(([a,b]) => 46>=a && 46<b);
+  document.getElementById('avg-h2').textContent = avgH;
   new Chart(document.getElementById('chartTaille'), {
     type:'bar',
     data:{
       labels,
-      datasets:[{ label:'Parieurs', data:counts, backgroundColor:'#38b2a3aa', borderRadius:6 }]
+      datasets:[
+        { label:'Parieurs', data:counts,
+          backgroundColor: counts.map((_,i) => i===realBinIndex ? '#38b2a3' : '#38b2a3aa'),
+          borderRadius:6 },
+        { label:'Réel (46 cm)', data:bins.map((_,i)=> i===realBinIndex ? Math.max(...counts)+0.5 : null),
+          type:'bar', backgroundColor:'#e53e3ecc', borderRadius:6 }
+      ]
     },
     options:{
-      plugins:{ legend:{display:false} },
+      plugins:{ legend:{ labels:{font:{family:'Poppins',size:12}}} },
       scales:{
         x:{grid:{display:false},ticks:{font:{family:'Poppins',size:12}}},
         y:{beginAtZero:true,ticks:{stepSize:1,font:{family:'Poppins',size:11}}}
@@ -856,39 +1057,89 @@ new Chart(document.getElementById('chartSexe'), {
 })();
 
 /* ══════════════════════════════════════
+   LEADERBOARD
+═══════════════════════════════════════ */
+(function(){
+  const medals = ['🥇','🥈','🥉'];
+  const barColor = n => n>=80?'#10b981':n>=65?'#4a90d9':n>=50?'#f0b429':'#9ca3af';
+  const pip = (label, pts, max) => {
+    const cls = pts===max?'hit':pts>0?'partial':'';
+    return `<span class="lb-pip ${cls}">${label} ${pts}/${max}</span>`;
+  };
+
+  document.getElementById('leaderboard').innerHTML = `<div class="lb-list">` +
+    RANKED.map((d,i) => {
+      const { total, s } = d;
+      const st = scoreStyle(total);
+      const rankLabel = i<3
+        ? `<span style="font-size:1.2rem">${medals[i]}</span>`
+        : `<span class="lb-rank ${i===0?'r1':i===1?'r2':i===2?'r3':''}">${i+1}</span>`;
+      return `
+      <div class="lb-item">
+        ${rankLabel}
+        <span class="lb-name">${d.parieurName.trim()}</span>
+        <div class="lb-pips">
+          ${pip('Sexe',s.sexe,20)}
+          ${pip('Date',s.date,30)}
+          ${pip('Poids',s.poids,20)}
+          ${pip('Taille',s.taille,20)}
+          ${pip('Yeux',s.yeux,5)}
+          ${pip('Cheveux',s.cheveux,5)}
+        </div>
+        <div class="lb-bar-wrap"><div class="lb-bar" style="width:${Math.round(total/MAX_SCORE*100)}%;background:${barColor(total)}"></div></div>
+        <span class="lb-score-val" style="color:${barColor(total)}">${total}</span>
+      </div>`;
+    }).join('') + `</div>`;
+})();
+
+/* ══════════════════════════════════════
    MESSAGES
 ═══════════════════════════════════════ */
 function buildCards(filter) {
   const grid = document.getElementById('messages-grid');
-  let items = [...DATA].reverse(); // chronological order
+  let items = [...RANKED]; // déjà triés par score
   if (filter === 'garcon') items = items.filter(d=>d.sexe==='garçon');
   if (filter === 'fille')  items = items.filter(d=>d.sexe==='fille');
   if (filter === 'msg')    items = items.filter(d=>d.autres&&d.autres.trim());
+  if (filter === 'all')    items = [...RANKED].reverse(); // chrono
 
-  const eyeIcon = {marron:'🟤', vert:'🟢', bleu:'🔵', gris:'⚫', '':'—'};
-  const hairIcon = {brun:'🟫', blond:'🌕', chauve:'😇', noir:'⬛', roux:'🧡', '':'—'};
+  const dot = c => `<span style="width:9px;height:9px;border-radius:50%;background:${c};display:inline-block;flex-shrink:0;margin-top:1px"></span>`;
+  const eyeIcon  = {marron:dot('#78350f'), vert:dot('#166534'), bleu:dot('#1d4ed8'), gris:dot('#9ca3af'), '':'—'};
+  const hairIcon = {brun:dot('#92400e'), blond:dot('#d97706'), chauve:dot('#d1d5db'), noir:dot('#1f2937'), roux:dot('#ea580c'), '':'—'};
+  const svgCal = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+  const svgHrt = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+  const svgWgt = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>`;
+  const svgRlr = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/><path d="m4.5 13.5 2 2"/></svg>`;
+  const svgEye = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>`;
+  const svgScr = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>`;
 
   const wNorm = d => { const v = normW(d.poids); return v ? (v/1000).toFixed(2).replace('.',',') + ' kg' : '—'; };
   const hNorm = d => { const v = normH(d.taille); return v ? v + ' cm' : '—'; };
   const fmtDate = iso => new Date(iso).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
 
-  grid.innerHTML = items.map(d => `
+  grid.innerHTML = items.map(d => {
+    const st = scoreStyle(d.total);
+    return `
     <div class="msg-card ${d.sexe==='fille'?'fille':''}">
       <div class="msg-header">
         <span class="msg-name">${d.parieurName.trim()}</span>
-        <span class="msg-sexe-badge ${d.sexe==='fille'?'fille':'garcon'}">${d.sexe==='fille'?'👧 fille':'👦 garçon'}</span>
+        <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="score-badge" style="background:${st.bg};color:${st.color}">${d.total}/100</span>
+          <span class="msg-sexe-badge ${d.sexe==='fille'?'fille':'garcon'}">${d.sexe==='fille'?'fille':'garçon'}</span>
+        </div>
       </div>
       <div class="msg-meta">
-        <span>📅 ${fmtDate(d.date)}</span>
-        <span>💙 ${d.prenom}</span>
-        <span>⚖️ ${wNorm(d)}</span>
-        <span>📏 ${hNorm(d)}</span>
-        <span>${eyeIcon[d.yeux]||'—'} yeux ${d.yeux||'—'}</span>
-        <span>${hairIcon[d.cheveux]||'—'} ${d.cheveux||'—'}</span>
+        <span>${svgCal} ${fmtDate(d.date)}</span>
+        <span>${svgHrt} ${d.prenom}</span>
+        <span>${svgWgt} ${wNorm(d)}</span>
+        <span>${svgRlr} ${hNorm(d)}</span>
+        <span>${svgEye} ${eyeIcon[d.yeux]||'—'} ${d.yeux||'—'}</span>
+        <span>${svgScr} ${hairIcon[d.cheveux]||'—'} ${d.cheveux||'—'}</span>
       </div>
       ${d.autres&&d.autres.trim()?`<div class="msg-text">"${d.autres.trim()}"</div>`:''}
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function filterMsg(filter, btn) {
