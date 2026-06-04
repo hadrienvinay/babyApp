@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenue Charlie ! 🍼</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #4a90d9;
+      --blue-lt: #e8f2fc;
+      --gold:    #f0b429;
+      --gold-lt: #fef9ec;
+      --green:   #38b2a3;
+      --green-lt:#e6f7f5;
+      --pink:    #e07ab0;
+      --pink-lt: #fce8f3;
+      --gray:    #6b7280;
+      --text:    #1a202c;
+      --bg:      #f7f9fc;
+      --white:   #ffffff;
+      --radius:  16px;
+      --shadow:  0 4px 24px rgba(0,0,0,.07);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1a6fc4 0%, #4a90d9 50%, #38b2a3 100%);
+      color: #fff;
+      text-align: center;
+      padding: 64px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      margin: 0 auto 20px;
+      border: 4px solid rgba(255,255,255,.5);
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    .hero-sub { font-size: 1.15rem; opacity: .9; margin-top: 8px; font-weight: 300; }
+    .hero-facts {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .hero-fact {
+      background: rgba(255,255,255,.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 50px;
+      padding: 10px 22px;
+      font-size: .95rem;
+      font-weight: 500;
+    }
+    .hero-fact span { margin-right: 6px; }
+
+    /* ── CONTAINER ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── SECTION ── */
+    section { padding: 56px 0; }
+    section + section { border-top: 1px solid #e5e7eb; }
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title .icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    /* ── STAT CARDS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border-top: 4px solid transparent;
+    }
+    .stat-card .stat-icon { font-size: 2rem; margin-bottom: 8px; }
+    .stat-card .stat-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-card .stat-label { font-size: .85rem; color: var(--gray); font-weight: 500; }
+    .stat-card.blue  { border-color: var(--blue);  } .stat-card.blue  .stat-value { color: var(--blue);  }
+    .stat-card.gold  { border-color: var(--gold);  } .stat-card.gold  .stat-value { color: var(--gold);  }
+    .stat-card.green { border-color: var(--green); } .stat-card.green .stat-value { color: var(--green); }
+    .stat-card.pink  { border-color: var(--pink);  } .stat-card.pink  .stat-value { color: var(--pink);  }
+
+    /* ── CHART CARDS ── */
+    .chart-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .chart-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+    }
+    .chart-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 20px; color: var(--text); }
+    .chart-wrapper { position: relative; }
+
+    /* ── WINNER BANNER ── */
+    .winners-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .winner-card {
+      background: linear-gradient(135deg, var(--gold-lt), #fff8e1);
+      border: 2px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 16px rgba(240,180,41,.15);
+    }
+    .winner-medal { font-size: 2.5rem; }
+    .winner-name { font-size: 1.1rem; font-weight: 700; }
+    .winner-detail { font-size: .85rem; color: var(--gray); margin-top: 2px; }
+    .winner-score {
+      margin-left: auto;
+      background: var(--gold);
+      color: #fff;
+      border-radius: 50px;
+      padding: 4px 14px;
+      font-size: .85rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .accuracy-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .accuracy-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .accuracy-icon { font-size: 1.8rem; }
+    .accuracy-label { font-size: .8rem; color: var(--gray); font-weight: 500; }
+    .accuracy-value { font-size: 1rem; font-weight: 700; margin-top: 2px; }
+    .badge {
+      display: inline-block;
+      border-radius: 50px;
+      padding: 2px 10px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    .badge-green { background: #d1fae5; color: #065f46; }
+    .badge-red   { background: #fee2e2; color: #991b1b; }
+
+    /* ── DATE PLACEHOLDER ── */
+    .date-placeholder {
+      background: linear-gradient(135deg, #e8f2fc, #fff);
+      border: 2px dashed var(--blue);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      color: var(--blue);
+      font-size: .95rem;
+      margin-bottom: 24px;
+    }
+    .date-placeholder strong { display: block; font-size: 1.1rem; margin-bottom: 4px; }
+
+    /* ── MESSAGES ── */
+    .messages-filter {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px;
+    }
+    .filter-btn {
+      background: var(--white);
+      border: 2px solid #e5e7eb;
+      border-radius: 50px;
+      padding: 7px 18px;
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+    .messages-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    .msg-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--blue);
+      transition: transform .15s;
+    }
+    .msg-card:hover { transform: translateY(-2px); }
+    .msg-card.fille { border-left-color: var(--pink); }
+    .msg-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .msg-name { font-weight: 700; font-size: .95rem; }
+    .msg-sexe-badge {
+      font-size: .72rem; font-weight: 700; border-radius: 50px;
+      padding: 3px 10px;
+    }
+    .msg-sexe-badge.garcon { background: var(--blue-lt); color: var(--blue); }
+    .msg-sexe-badge.fille  { background: var(--pink-lt); color: var(--pink); }
+    .msg-meta {
+      font-size: .78rem; color: var(--gray); margin-bottom: 10px;
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .msg-meta span { display: flex; align-items: center; gap: 3px; }
+    .msg-text {
+      font-size: .88rem; color: #374151; font-style: italic;
+      border-top: 1px solid #f3f4f6; padding-top: 10px; margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--gray);
+      font-size: .85rem;
+    }
+    footer .heart { color: var(--pink); font-size: 1.1rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero { padding: 48px 16px 64px; }
+      .hero-emoji { font-size: 56px; }
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      .messages-filter { display: none; }
+      .msg-card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<div class="hero">
+  <img src="/charlie.jpg" alt="Charlie" class="hero-photo">
+  <h1>Bienvenue, Charlie !</h1>
+  <p class="hero-sub">Le grand bilan des paris — 74 parieurs, un seul vainqueur !</p>
+  <div class="hero-facts">
+    <div class="hero-fact"><span>👦</span>Garçon</div>
+    <div class="hero-fact"><span>💙</span>Charlie</div>
+    <div class="hero-fact"><span>⚖️</span>2,8 kg</div>
+    <div class="hero-fact"><span>👀</span>Yeux marron</div>
+    <div class="hero-fact"><span>🌙</span>Un peu de cheveux</div>
+    <div class="hero-fact"><span>📅</span>Né le 6 mai 2026</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════
+     STATS GLOBALES
+═══════════════════════════════════════ -->
+<section>
+  <div class="section-title">
+    <div class="icon" style="background:#e8f2fc">📊</div>
+    Chiffres clés
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-icon">🎯</div>
+      <div class="stat-value">74</div>
+      <div class="stat-label">Parieurs</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-icon">👦</div>
+      <div class="stat-value">59 %</div>
+      <div class="stat-label">Ont parié garçon</div>
+    </div>
+    <div class="stat-card gold">
+      <div class="stat-icon">⚖️</div>
+      <div class="stat-value" id="avg-weight">—</div>
+      <div class="stat-label">Poids moyen prédit</div>
+    </div>
+    <div class="stat-card pink">
+      <div class="stat-icon">📏</div>
+      <div class="stat-value" id="avg-height">—</div>
+      <div class="stat-label">Taille moyenne prédite</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-icon">📅</div>
+      <div class="stat-value">6 mai</div>
+      <div class="stat-label">Vraie date de naissance</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-icon">💬</div>
+      <div class="stat-value" id="msg-count">—</div>
+      <div class="stat-label">Messages laissés</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     GAGNANTS
+═══════════════════════════════════════ -->
+<section>
+  <div class="section-title">
+    <div class="icon" style="background:#fef9ec">🏆</div>
+    Les plus proches du but
+  </div>
+
+  <div style="background:linear-gradient(135deg,#fef9ec,#fff8e1);border:2px solid var(--gold);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">
+    <span style="font-size:2rem;">🎉</span>
+    <div>
+      <div style="font-weight:700;font-size:1.05rem;">Charlie est né le <strong>6 mai 2026</strong> !</div>
+      <div style="font-size:.88rem;color:var(--gray);margin-top:2px;">2 800 g · yeux marron · un peu de cheveux · 5 parieurs avaient deviné la bonne date</div>
+    </div>
+  </div>
+
+  <div class="winners-grid">
+    <div class="winner-card" style="border-color:#7c3aed;background:linear-gradient(135deg,#ede9fe,#fff);">
+      <div class="winner-medal">🏆</div>
+      <div>
+        <div class="winner-name">Dianou · Marie Laure · Mel · Aggl</div>
+        <div class="winner-detail">Date <strong>exacte</strong> (6 mai) + <strong>sexe exact</strong> (garçon) — les grands gagnants !</div>
+      </div>
+      <div class="winner-score" style="background:#7c3aed;">Date + Sexe ✓</div>
+    </div>
+    <div class="winner-card">
+      <div class="winner-medal">🥇</div>
+      <div>
+        <div class="winner-name">Jazz</div>
+        <div class="winner-detail">Poids prédit : 2 856 g → écart de seulement <strong>56 g</strong> sur 2 800 g !</div>
+      </div>
+      <div class="winner-score">Poids ⚖️</div>
+    </div>
+    <div class="winner-card">
+      <div class="winner-medal">🥈</div>
+      <div>
+        <div class="winner-name">Soso · Chrissou · Alexandre</div>
+        <div class="winner-detail">Poids prédit : 2 900 g → écart de 100 g</div>
+      </div>
+      <div class="winner-score">Poids ⚖️</div>
+    </div>
+    <div class="winner-card" style="border-color:#4a90d9;background:linear-gradient(135deg,#e8f2fc,#fff);">
+      <div class="winner-medal">🎯</div>
+      <div>
+        <div class="winner-name">HUUUUURE</div>
+        <div class="winner-detail">A prédit la bonne date (6 mai) mais avait parié fille 😅</div>
+      </div>
+      <div class="winner-score" style="background:var(--blue);">Date seule 📅</div>
+    </div>
+  </div>
+
+  <div class="accuracy-row">
+    <div class="accuracy-card">
+      <div class="accuracy-icon">👶</div>
+      <div>
+        <div class="accuracy-label">Sexe — Charlie est un garçon</div>
+        <div class="accuracy-value">44/74 l'ont deviné <span class="badge badge-green">59 %</span></div>
+      </div>
+    </div>
+    <div class="accuracy-card">
+      <div class="accuracy-icon">⚖️</div>
+      <div>
+        <div class="accuracy-label">Poids réel : 2 800 g</div>
+        <div class="accuracy-value">Moy. prédite : <strong id="avg-w2">—</strong> g</div>
+      </div>
+    </div>
+    <div class="accuracy-card">
+      <div class="accuracy-icon">👀</div>
+      <div>
+        <div class="accuracy-label">Yeux — marron</div>
+        <div class="accuracy-value">51/73 l'ont prédit <span class="badge badge-green">70 %</span></div>
+      </div>
+    </div>
+    <div class="accuracy-card">
+      <div class="accuracy-icon">🌙</div>
+      <div>
+        <div class="accuracy-label">Cheveux — un peu (brun/noir)</div>
+        <div class="accuracy-value">47 ont dit brun, 3 noir</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CHARTS — SEXE + DATE
+═══════════════════════════════════════ -->
+<section>
+  <div class="section-title">
+    <div class="icon" style="background:#e8f2fc">📈</div>
+    Résultats des paris
+  </div>
+  <div class="chart-grid">
+
+    <div class="chart-card">
+      <h3>👦👧 Sexe prédit</h3>
+      <div class="chart-wrapper" style="max-width:260px; margin:0 auto;">
+        <canvas id="chartSexe"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card" style="grid-column: span 2;">
+      <h3>📅 Distribution des dates pariées <span style="background:#fef9ec;color:#b45309;border-radius:50px;padding:2px 10px;font-size:.78rem;font-weight:700;margin-left:6px;">🌟 6 mai = vraie date</span></h3>
+      <div class="chart-wrapper">
+        <canvas id="chartDate" height="90"></canvas>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CHARTS — POIDS + TAILLE
+═══════════════════════════════════════ -->
+<section>
+  <div class="section-title">
+    <div class="icon" style="background:#e6f7f5">📏</div>
+    Poids &amp; Taille prédits
+  </div>
+  <div class="chart-grid">
+
+    <div class="chart-card">
+      <h3>⚖️ Répartition des poids prédits (g)</h3>
+      <div class="chart-wrapper">
+        <canvas id="chartPoids" height="160"></canvas>
+      </div>
+      <p style="font-size:.78rem;color:var(--gray);margin-top:12px;text-align:center;">
+        La ligne rouge représente le vrai poids de Charlie (2 800 g)
+      </p>
+    </div>
+
+    <div class="chart-card">
+      <h3>📏 Répartition des tailles prédites (cm)</h3>
+      <div class="chart-wrapper">
+        <canvas id="chartTaille" height="160"></canvas>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CHARTS — PHYSIQUE
+═══════════════════════════════════════ -->
+<section>
+  <div class="section-title">
+    <div class="icon" style="background:#fce8f3">✨</div>
+    Pronostics physiques
+  </div>
+  <div class="chart-grid">
+
+    <div class="chart-card">
+      <h3>👀 Couleur des yeux pariée</h3>
+      <div class="chart-wrapper" style="max-width:280px;margin:0 auto;">
+        <canvas id="chartYeux"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>💇 Type de cheveux parié</h3>
+      <div class="chart-wrapper" style="max-width:280px;margin:0 auto;">
+        <canvas id="chartCheveux"></canvas>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PRÉNOMS
+═══════════════════════════════════════ -->
+<section>
+  <div class="section-title">
+    <div class="icon" style="background:#fef9ec">💫</div>
+    Prénoms proposés (top suggestions)
+  </div>
+  <div id="prenoms-cloud" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     MESSAGES
+═══════════════════════════════════════ -->
+<section>
+  <div class="section-title">
+    <div class="icon" style="background:#e6f7f5">💬</div>
+    Messages &amp; commentaires
+  </div>
+
+  <div class="messages-filter">
+    <button class="filter-btn active" onclick="filterMsg('all', this)">Tous (74)</button>
+    <button class="filter-btn" onclick="filterMsg('garcon', this)">👦 Garçon (44)</button>
+    <button class="filter-btn" onclick="filterMsg('fille', this)">👧 Fille (30)</button>
+    <button class="filter-btn" onclick="filterMsg('msg', this)">💬 Avec message</button>
+  </div>
+
+  <div class="messages-grid" id="messages-grid"></div>
+</section>
+
+</div><!-- /container -->
+
+<footer>
+  <p>Fait avec <span class="heart">♥</span> pour fêter l'arrivée de Charlie — 2026</p>
+</footer>
+
+<script>
+/* ══════════════════════════════════════
+   DATA
+═══════════════════════════════════════ */
+const DATA = [
+  {id:74,parieurName:"Alice bis",sexe:"fille",date:"2026-05-03",prenom:"Léa",poids:"3300",taille:"50",yeux:"vert",cheveux:"brun",autres:""},
+  {id:73,parieurName:"Alitche",sexe:"fille",date:"2026-05-03",prenom:"Eva",poids:"3000",taille:"48",yeux:"vert",cheveux:"brun",autres:""},
+  {id:72,parieurName:"Dianou",sexe:"garçon",date:"2026-05-06",prenom:"Merlin",poids:"32010",taille:"47",yeux:"marron",cheveux:"brun",autres:"Trop hâte de rencontrer bébé Layla et flafla ! ❤️"},
+  {id:71,parieurName:"Joanne",sexe:"fille",date:"2026-05-05",prenom:"Flavia",poids:"3300",taille:"51",yeux:"marron",cheveux:"blond",autres:""},
+  {id:70,parieurName:"Selma",sexe:"garçon",date:"2026-05-07",prenom:"Achille",poids:"3200",taille:"50",yeux:"marron",cheveux:"blond",autres:""},
+  {id:69,parieurName:"Chaïmaa",sexe:"fille",date:"2026-05-01",prenom:"Pauline",poids:"320",taille:"45",yeux:"marron",cheveux:"brun",autres:""},
+  {id:68,parieurName:"Ced le marathonien sub 3h00 😜",sexe:"garçon",date:"2026-05-04",prenom:"Marceau",poids:"3",taille:"080",yeux:"marron",cheveux:"brun",autres:"Là, je suis sur une cote à 15.00 ! Mais j'ai un peu triché car effectué ce pari au 22/04.. c'est un peu triché ! En tout cas, profitez à fond de ce beau moment ! Des bisous 😘 à très vite pour voir la petite bouille de Marceau Es !"},
+  {id:67,parieurName:"HUUUUURE",sexe:"fille",date:"2026-05-06",prenom:"Léa",poids:"3650",taille:"48",yeux:"marron",cheveux:"brun",autres:"Flavien va se faire vicosssse"},
+  {id:66,parieurName:"Agathe",sexe:"garçon",date:"2026-05-10",prenom:"Gaspard",poids:"2",taille:"",yeux:"marron",cheveux:"",autres:""},
+  {id:65,parieurName:"Apolline",sexe:"fille",date:"2026-04-30",prenom:"Capucine",poids:"3.1",taille:"50",yeux:"bleu",cheveux:"brun",autres:""},
+  {id:64,parieurName:"Rodolphe",sexe:"fille",date:"2026-05-02",prenom:"Rodolphe",poids:"32",taille:"55",yeux:"marron",cheveux:"brun",autres:""},
+  {id:63,parieurName:"Ludo",sexe:"garçon",date:"2026-04-20",prenom:"Maxence",poids:"",taille:"",yeux:"vert",cheveux:"brun",autres:"Gros bisous les loulous !"},
+  {id:62,parieurName:"LeVraiSuri",sexe:"fille",date:"2026-04-28",prenom:"Romane",poids:"2995",taille:"49.5",yeux:"bleu",cheveux:"chauve",autres:"A moi la PS5 <3"},
+  {id:61,parieurName:"Tara",sexe:"fille",date:"2026-04-20",prenom:"Capucine",poids:"1.5",taille:"30",yeux:"marron",cheveux:"brun",autres:""},
+  {id:60,parieurName:"Mehdi",sexe:"garçon",date:"2026-04-20",prenom:"Michel",poids:"2.4",taille:"100",yeux:"marron",cheveux:"blond",autres:""},
+  {id:59,parieurName:"Augustin",sexe:"garçon",date:"2026-04-24",prenom:"Gaspard",poids:"3900",taille:"47",yeux:"bleu",cheveux:"chauve",autres:"Gaspard, Marie, Brandao voilà les prénoms"},
+  {id:58,parieurName:"Papy moto",sexe:"garçon",date:"2026-05-02",prenom:"Paul",poids:"3.150",taille:"50",yeux:"marron",cheveux:"brun",autres:""},
+  {id:57,parieurName:"Laure",sexe:"garçon",date:"2026-04-30",prenom:"Eliott",poids:"330",taille:"50",yeux:"marron",cheveux:"brun",autres:""},
+  {id:56,parieurName:"Cam",sexe:"fille",date:"2026-04-18",prenom:"Adèle",poids:"3450",taille:"50",yeux:"bleu",cheveux:"blond",autres:""},
+  {id:55,parieurName:"Louc",sexe:"garçon",date:"2026-04-17",prenom:"Gabriel",poids:"",taille:"",yeux:"marron",cheveux:"noir",autres:""},
+  {id:54,parieurName:"Sof",sexe:"garçon",date:"2026-05-01",prenom:"Gabriel",poids:"3300",taille:"52",yeux:"gris",cheveux:"chauve",autres:"Fais un doigt d'honneur"},
+  {id:53,parieurName:"Pauline",sexe:"garçon",date:"2026-04-20",prenom:"Babe III",poids:"",taille:"",yeux:"marron",cheveux:"brun",autres:""},
+  {id:52,parieurName:"Jean-Ma",sexe:"garçon",date:"2026-04-24",prenom:"Jules",poids:"3800",taille:"50",yeux:"marron",cheveux:"brun",autres:""},
+  {id:51,parieurName:"Willy B",sexe:"garçon",date:"2026-05-03",prenom:"Timothée",poids:"3150",taille:"48",yeux:"marron",cheveux:"brun",autres:""},
+  {id:50,parieurName:"Arsène",sexe:"garçon",date:"2026-05-02",prenom:"Barthélémy",poids:"3100",taille:"49",yeux:"vert",cheveux:"brun",autres:"Je paris qu'il aura 2 bras"},
+  {id:49,parieurName:"Emmanuelle",sexe:"garçon",date:"2026-05-03",prenom:"Sacha",poids:"3450",taille:"51",yeux:"marron",cheveux:"brun",autres:""},
+  {id:48,parieurName:"Maxime",sexe:"garçon",date:"2026-05-08",prenom:"Bolognaise",poids:"3500",taille:"50",yeux:"bleu",cheveux:"brun",autres:""},
+  {id:47,parieurName:"Nathan",sexe:"garçon",date:"2026-04-20",prenom:"Flavio",poids:"13008",taille:"13",yeux:"bleu",cheveux:"brun",autres:"Projet Dimitri Payet"},
+  {id:46,parieurName:"Brune",sexe:"fille",date:"2026-04-20",prenom:"Leo, Sasha",poids:"3500",taille:"52",yeux:"gris",cheveux:"chauve",autres:""},
+  {id:45,parieurName:"Marie Hélène",sexe:"fille",date:"2026-04-20",prenom:"Laurette",poids:"3500",taille:"51",yeux:"marron",cheveux:"blond",autres:""},
+  {id:44,parieurName:"Gab",sexe:"garçon",date:"2026-04-23",prenom:"Julien",poids:"3700",taille:"47",yeux:"vert",cheveux:"brun",autres:""},
+  {id:43,parieurName:"Pierre",sexe:"fille",date:"2026-04-21",prenom:"Alice",poids:"3056",taille:"48",yeux:"marron",cheveux:"brun",autres:"C'est les parents qui seront au pays des merveilles !"},
+  {id:42,parieurName:"Marie Laure",sexe:"garçon",date:"2026-05-06",prenom:"Leo",poids:"3350",taille:"50.5",yeux:"marron",cheveux:"brun",autres:"Le plus beau bébé du monde quoi qu'il arrive !"},
+  {id:41,parieurName:"La Fouine",sexe:"fille",date:"2026-05-01",prenom:"Léonie",poids:"2995",taille:"49",yeux:"vert",cheveux:"brun",autres:""},
+  {id:40,parieurName:"T1t1",sexe:"garçon",date:"2026-04-16",prenom:"Rocco ou Bruno ou Tom",poids:"2669.51",taille:"51",yeux:"vert",cheveux:"brun",autres:"En espérant qu'il aime le skate les mots fléchés la pétanque et le ricard"},
+  {id:39,parieurName:"Blanblan",sexe:"garçon",date:"2026-05-09",prenom:"Pacôme",poids:"3.160",taille:"49",yeux:"marron",cheveux:"brun",autres:"Quel que soit le résultat, ce bébé sera adorable et PR va le chouchouter autant qu'il l'embêtera !! Trop hâte de vous voir devenir parents 🥹🥰"},
+  {id:38,parieurName:"Lulu",sexe:"fille",date:"2026-04-22",prenom:"Julia",poids:"3800",taille:"51",yeux:"marron",cheveux:"brun",autres:""},
+  {id:37,parieurName:"Jules",sexe:"fille",date:"2026-04-19",prenom:"Léa",poids:"3125",taille:"52",yeux:"marron",cheveux:"brun",autres:"Coucou"},
+  {id:36,parieurName:"Chrissou",sexe:"garçon",date:"2026-04-18",prenom:"Pesto Verde",poids:"2900",taille:"49",yeux:"marron",cheveux:"noir",autres:"Il sera méga mignon"},
+  {id:35,parieurName:"MA",sexe:"garçon",date:"2026-05-01",prenom:"Isildur",poids:"3666",taille:"46",yeux:"marron",cheveux:"roux",autres:"Cc les babes, j'ai hâte de rencontrer Isildur dans sa grenouillère Lidl assortie à son daron 🤩 J'espère que son 2e prénom sera Pesto Verde pour faire la paire avec PR et je suis sûre qu'il sera un super grand frère 🍝 Anyway trop heureuse pour vous 🥰"},
+  {id:34,parieurName:"Arthurito",sexe:"fille",date:"2026-04-20",prenom:"Marie-Pia",poids:"3137",taille:"47",yeux:"marron",cheveux:"chauve",autres:"Tellement heureux pour vous ! Même si j'aurais sûrement faux à tous mes pronostics, trop hâte de rencontrer ma merveilleuse petite filleule 🤭🤯👼"},
+  {id:33,parieurName:"Alexandre",sexe:"garçon",date:"2026-04-20",prenom:"Antoine",poids:"2900",taille:"47",yeux:"marron",cheveux:"brun",autres:"Bisous les amours 🥰🥰 J'ai mis Antoine mais objectivement je trouve que Alexandre c'est bien aussi si vous hésitez"},
+  {id:32,parieurName:"Emilio",sexe:"garçon",date:"2026-05-02",prenom:"Côme",poids:"3190",taille:"51",yeux:"gris",cheveux:"blond",autres:"Vous êtes les best ♥️"},
+  {id:31,parieurName:"Alexia",sexe:"garçon",date:"2026-05-03",prenom:"Maël",poids:"3341",taille:"49",yeux:"marron",cheveux:"brun",autres:"Couleur préférée : violet"},
+  {id:30,parieurName:"Coralie",sexe:"fille",date:"2026-05-04",prenom:"Émilie",poids:"3.6",taille:"47",yeux:"marron",cheveux:"chauve",autres:"Bien au pif tout ça 😂"},
+  {id:29,parieurName:"Sophie",sexe:"fille",date:"2026-04-20",prenom:"Lola",poids:"3100",taille:"47",yeux:"marron",cheveux:"brun",autres:""},
+  {id:28,parieurName:"Mel",sexe:"garçon",date:"2026-05-06",prenom:"Arthur",poids:"3.3",taille:"50",yeux:"marron",cheveux:"brun",autres:""},
+  {id:27,parieurName:"Parrain Eric",sexe:"fille",date:"2026-04-28",prenom:"Flore",poids:"3100",taille:"50",yeux:"gris",cheveux:"noir",autres:""},
+  {id:26,parieurName:"Jazz",sexe:"garçon",date:"2026-05-05",prenom:"Elliott",poids:"2856",taille:"36",yeux:"bleu",cheveux:"brun",autres:"Quoi qu'il arrive ce sera une star ce baby 😍😍😍"},
+  {id:25,parieurName:"Angel",sexe:"fille",date:"2026-04-20",prenom:"Augustine",poids:"3800",taille:"49",yeux:"vert",cheveux:"brun",autres:""},
+  {id:24,parieurName:"Romain",sexe:"fille",date:"2026-05-01",prenom:"Lou",poids:"3600",taille:"65",yeux:"marron",cheveux:"brun",autres:""},
+  {id:23,parieurName:"Chuy",sexe:"fille",date:"2026-05-09",prenom:"Juliette",poids:"3300",taille:"50",yeux:"marron",cheveux:"brun",autres:""},
+  {id:22,parieurName:"BRUNO",sexe:"fille",date:"2026-04-20",prenom:"Lou",poids:"3300",taille:"52",yeux:"marron",cheveux:"brun",autres:""},
+  {id:21,parieurName:"Delvalo",sexe:"garçon",date:"2026-04-28",prenom:"Théo",poids:"3420",taille:"53.5",yeux:"marron",cheveux:"chauve",autres:"💖💖"},
+  {id:20,parieurName:"Valérie",sexe:"garçon",date:"2026-05-02",prenom:"Malo",poids:"3200",taille:"52",yeux:"marron",cheveux:"blond",autres:""},
+  {id:19,parieurName:"Aggl",sexe:"garçon",date:"2026-05-06",prenom:"Arnaud",poids:"3800",taille:"56",yeux:"marron",cheveux:"brun",autres:"Il aura la même caisse que son tonton !"},
+  {id:18,parieurName:"Carole",sexe:"garçon",date:"2026-05-18",prenom:"Theo",poids:"4100",taille:"48",yeux:"marron",cheveux:"brun",autres:""},
+  {id:17,parieurName:"Tartine",sexe:"garçon",date:"2026-04-18",prenom:"Ricard",poids:"3600",taille:"48",yeux:"marron",cheveux:"blond",autres:"Ça sera le plus beau bébé du monde"},
+  {id:16,parieurName:"Hervé",sexe:"garçon",date:"2026-05-08",prenom:"Eliott",poids:"3643",taille:"51",yeux:"marron",cheveux:"brun",autres:""},
+  {id:15,parieurName:"Justine",sexe:"garçon",date:"2026-04-20",prenom:"Justin",poids:"3400",taille:"51",yeux:"marron",cheveux:"brun",autres:"Hâte que votre petit bébé d'amour voit le jour ! Et de potentiellement partager la même date d'anniversaire que lui. 😍 plein de bisous et bon courage pour les dernières semaines de grossesse !"},
+  {id:14,parieurName:"Aide",sexe:"garçon",date:"2026-04-29",prenom:"Arthur",poids:"3460",taille:"50",yeux:"gris",cheveux:"brun",autres:"Je parie qu'il recevra beaucoup d'amour"},
+  {id:13,parieurName:"Justine",sexe:"fille",date:"2026-05-01",prenom:"Claire",poids:"3000",taille:"50",yeux:"bleu",cheveux:"blond",autres:"On aurait voulu être de retour du Japon mais je pense que ça arrivera avant xD."},
+  {id:12,parieurName:"Petit T",sexe:"fille",date:"2026-05-05",prenom:"Lou",poids:"4528",taille:"51",yeux:"marron",cheveux:"brun",autres:"Sinon Théo junior c'est cool aussi"},
+  {id:11,parieurName:"Laulau",sexe:"garçon",date:"2026-04-30",prenom:"Eliott",poids:"358",taille:"49.8",yeux:"marron",cheveux:"roux",autres:"Second prénoms : Pio & Robert (aka PR)"},
+  {id:10,parieurName:"Nata",sexe:"fille",date:"2026-04-20",prenom:"Léa",poids:"3600",taille:"50",yeux:"marron",cheveux:"brun",autres:"Bienvenue 🤗❤️"},
+  {id:9,parieurName:"La couz eliza",sexe:"garçon",date:"2026-05-04",prenom:"Biscuit minouche",poids:"",taille:"",yeux:"",cheveux:"roux",autres:"Trop hâte de rentrer en France pour vous voir 🫶"},
+  {id:8,parieurName:"Micha",sexe:"fille",date:"2026-05-01",prenom:"Lou clemence",poids:"3555",taille:"50",yeux:"marron",cheveux:"brun",autres:"Le plus beau et le plus mignon bébé du monde❤️❤️❤️❤️❤️"},
+  {id:7,parieurName:"Soso",sexe:"garçon",date:"2026-05-01",prenom:"Paul",poids:"2900",taille:"49",yeux:"marron",cheveux:"chauve",autres:""},
+  {id:6,parieurName:"Jonathan",sexe:"garçon",date:"2026-04-21",prenom:"Achille",poids:"3400",taille:"49",yeux:"marron",cheveux:"brun",autres:"Droitier"},
+  {id:5,parieurName:"Pivette",sexe:"fille",date:"2026-04-15",prenom:"Louise",poids:"3567",taille:"51",yeux:"marron",cheveux:"chauve",autres:""},
+  {id:4,parieurName:"Maëva",sexe:"fille",date:"2026-04-20",prenom:"Rose",poids:"2900",taille:"49",yeux:"marron",cheveux:"chauve",autres:""},
+  {id:3,parieurName:"Aure",sexe:"garçon",date:"2026-04-26",prenom:"Eliott",poids:"3000",taille:"52",yeux:"marron",cheveux:"brun",autres:""},
+  {id:2,parieurName:"Flavien",sexe:"garçon",date:"2026-04-20",prenom:"Robert",poids:"4300",taille:"55",yeux:"marron",cheveux:"blond",autres:"Banger"},
+  {id:1,parieurName:"Suri",sexe:"garçon",date:"2026-04-20",prenom:"Marlo",poids:"4200",taille:"42",yeux:"vert",cheveux:"brun",autres:""}
+];
+
+/* ══════════════════════════════════════
+   WEIGHT NORMALISATION
+═══════════════════════════════════════ */
+function normW(raw) {
+  if (!raw || raw === '') return null;
+  let v = parseFloat(raw);
+  if (isNaN(v) || v === 0) return null;
+  if (v >= 1.5 && v < 10)    return Math.round(v * 1000); // kg
+  if (v >= 1500 && v <= 5500) return Math.round(v);        // grams ok
+  if (v >= 100  && v < 1500)  return Math.round(v * 10);   // missing digit e.g. 320→3200
+  if (v >= 10   && v < 100)   return Math.round(v * 100);  // e.g. 32→3200
+  return null; // outliers like 13008, 32010 ignored
+}
+
+function normH(raw) {
+  if (!raw || raw === '') return null;
+  let v = parseFloat(raw);
+  if (isNaN(v)) return null;
+  if (v >= 40 && v <= 60) return v;
+  return null; // obvious jokes (80, 100, 30, 36, 65, 13) excluded
+}
+
+/* ══════════════════════════════════════
+   COMPUTED STATS
+═══════════════════════════════════════ */
+const weights  = DATA.map(d => normW(d.poids)).filter(Boolean);
+const heights  = DATA.map(d => normH(d.taille)).filter(Boolean);
+const avgW = Math.round(weights.reduce((a,b)=>a+b,0) / weights.length);
+const avgH = (heights.reduce((a,b)=>a+b,0) / heights.length).toFixed(1);
+const msgCount = DATA.filter(d => d.autres && d.autres.trim()).length;
+
+document.getElementById('avg-weight').textContent = avgW + ' g';
+document.getElementById('avg-height').textContent = avgH + ' cm';
+document.getElementById('avg-w2').textContent = avgW;
+document.getElementById('msg-count').textContent = msgCount;
+
+/* ══════════════════════════════════════
+   PRÉNOMS CLOUD
+═══════════════════════════════════════ */
+(function() {
+  const freq = {};
+  DATA.forEach(d => {
+    const p = d.prenom.trim().split(/[,/]/)[0].trim().toLowerCase();
+    freq[p] = (freq[p]||0)+1;
+  });
+  const sorted = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,25);
+  const colors = ['var(--blue)','var(--green)','var(--pink)','var(--gold)','#7c3aed','#dc2626'];
+  const cloud = document.getElementById('prenoms-cloud');
+  sorted.forEach(([name, count], i) => {
+    const size = 0.75 + count * 0.25;
+    cloud.innerHTML += `<span style="
+      font-size:${size}rem;font-weight:${count>1?700:400};
+      background:var(--white);border-radius:50px;padding:8px 18px;
+      box-shadow:var(--shadow);color:${colors[i%colors.length]};
+      border:2px solid ${colors[i%colors.length]}20;
+    ">${name.charAt(0).toUpperCase()+name.slice(1)}${count>1?' ×'+count:''}</span>`;
+  });
+})();
+
+/* ══════════════════════════════════════
+   CHART: SEXE
+═══════════════════════════════════════ */
+new Chart(document.getElementById('chartSexe'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Garçon 👦', 'Fille 👧'],
+    datasets:[{ data:[44,30], backgroundColor:['#4a90d9','#e07ab0'], borderWidth:0, hoverOffset:8 }]
+  },
+  options:{
+    plugins:{
+      legend:{ position:'bottom', labels:{ font:{family:'Poppins',size:13}, padding:20 }},
+      tooltip:{ callbacks:{ label: ctx => ` ${ctx.label}: ${ctx.raw} parieurs (${Math.round(ctx.raw/74*100)} %)` }}
+    },
+    cutout:'65%'
+  }
+});
+
+/* ══════════════════════════════════════
+   CHART: DATES
+═══════════════════════════════════════ */
+(function(){
+  const freq = {};
+  DATA.forEach(d => { freq[d.date] = (freq[d.date]||0)+1; });
+  const labels = Object.keys(freq).sort();
+  const values = labels.map(k => freq[k]);
+  const fmtLabel = iso => {
+    const d = new Date(iso);
+    return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+  };
+  new Chart(document.getElementById('chartDate'), {
+    type:'bar',
+    data:{
+      labels: labels.map(fmtLabel),
+      datasets:[{
+        label:'Parieurs',
+        data: values,
+        backgroundColor: labels.map(l => l==='2026-05-06' ? '#f0b429' : l==='2026-04-20' ? '#93c5fd' : '#4a90d9'),
+        borderRadius:6
+      }]
+    },
+    options:{
+      plugins:{
+        legend:{display:false},
+        tooltip:{ callbacks:{ title: (i)=>labels[i[0].dataIndex], label: ctx=>`${ctx.raw} parieur(s)` }}
+      },
+      scales:{
+        x:{ grid:{display:false}, ticks:{font:{family:'Poppins',size:11}} },
+        y:{ beginAtZero:true, ticks:{stepSize:1, font:{family:'Poppins',size:11}} }
+      }
+    }
+  });
+})();
+
+/* ══════════════════════════════════════
+   CHART: POIDS (histogram)
+═══════════════════════════════════════ */
+(function(){
+  const bins = [[2000,2500],[2500,2800],[2800,3000],[3000,3200],[3200,3400],[3400,3600],[3600,3800],[3800,4000],[4000,4600]];
+  const labels = bins.map(([a,b])=>`${a/1000}–${b/1000} kg`);
+  const counts = bins.map(([a,b]) => weights.filter(w=>w>=a&&w<b).length);
+  const bgColors = bins.map(([a])=> a===2800 ? '#f0b429' : '#4a90d9');
+
+  new Chart(document.getElementById('chartPoids'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        { label:'Parieurs', data:counts, backgroundColor: counts.map((_,i)=>{
+          const [a,b]=bins[i];
+          return (2800>=a&&2800<b)?'#f0b429aa':'#4a90d9aa';
+        }), borderRadius:6 },
+        { label:'Réel (2 800 g)', data:bins.map(([a,b])=>(2800>=a&&2800<b)?Math.max(...counts)+0.5:null),
+          type:'bar', backgroundColor:'#e53e3e', borderRadius:6 }
+      ]
+    },
+    options:{
+      plugins:{
+        legend:{ labels:{font:{family:'Poppins',size:12}}},
+        annotation:{},
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{font:{family:'Poppins',size:11}}},
+        y:{beginAtZero:true,ticks:{stepSize:1,font:{family:'Poppins',size:11}}}
+      }
+    }
+  });
+})();
+
+/* ══════════════════════════════════════
+   CHART: TAILLE
+═══════════════════════════════════════ */
+(function(){
+  const bins = [[44,46],[46,48],[48,50],[50,52],[52,54],[54,57]];
+  const labels = bins.map(([a,b])=>`${a}–${b} cm`);
+  const counts = bins.map(([a,b]) => heights.filter(h=>h>=a&&h<b).length);
+  new Chart(document.getElementById('chartTaille'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{ label:'Parieurs', data:counts, backgroundColor:'#38b2a3aa', borderRadius:6 }]
+    },
+    options:{
+      plugins:{ legend:{display:false} },
+      scales:{
+        x:{grid:{display:false},ticks:{font:{family:'Poppins',size:12}}},
+        y:{beginAtZero:true,ticks:{stepSize:1,font:{family:'Poppins',size:11}}}
+      }
+    }
+  });
+})();
+
+/* ══════════════════════════════════════
+   CHART: YEUX
+═══════════════════════════════════════ */
+(function(){
+  const freq = {marron:0, vert:0, bleu:0, gris:0};
+  DATA.forEach(d=>{ if(freq[d.yeux]!==undefined) freq[d.yeux]++; });
+  new Chart(document.getElementById('chartYeux'), {
+    type:'doughnut',
+    data:{
+      labels:['Marron 🟤','Vert 🟢','Bleu 🔵','Gris ⚫'],
+      datasets:[{ data:[freq.marron,freq.vert,freq.bleu,freq.gris],
+        backgroundColor:['#92400e','#065f46','#1e40af','#6b7280'], borderWidth:0, hoverOffset:8 }]
+    },
+    options:{
+      plugins:{
+        legend:{ position:'bottom', labels:{font:{family:'Poppins',size:12},padding:16} },
+        tooltip:{ callbacks:{ label: ctx=>`${ctx.label}: ${ctx.raw} parieurs` }}
+      },
+      cutout:'60%'
+    }
+  });
+})();
+
+/* ══════════════════════════════════════
+   CHART: CHEVEUX
+═══════════════════════════════════════ */
+(function(){
+  const freq = {brun:0, blond:0, chauve:0, noir:0, roux:0};
+  DATA.forEach(d=>{ if(d.cheveux && freq[d.cheveux]!==undefined) freq[d.cheveux]++; });
+  new Chart(document.getElementById('chartCheveux'), {
+    type:'doughnut',
+    data:{
+      labels:['Brun 🟫','Blond 🌕','Chauve 😇','Noir ⬛','Roux 🧡'],
+      datasets:[{ data:[freq.brun,freq.blond,freq.chauve,freq.noir,freq.roux],
+        backgroundColor:['#78350f','#fbbf24','#e5e7eb','#1f2937','#ea580c'], borderWidth:0, hoverOffset:8 }]
+    },
+    options:{
+      plugins:{
+        legend:{ position:'bottom', labels:{font:{family:'Poppins',size:12},padding:16} },
+        tooltip:{ callbacks:{ label: ctx=>`${ctx.label}: ${ctx.raw} parieurs` }}
+      },
+      cutout:'60%'
+    }
+  });
+})();
+
+/* ══════════════════════════════════════
+   MESSAGES
+═══════════════════════════════════════ */
+function buildCards(filter) {
+  const grid = document.getElementById('messages-grid');
+  let items = [...DATA].reverse(); // chronological order
+  if (filter === 'garcon') items = items.filter(d=>d.sexe==='garçon');
+  if (filter === 'fille')  items = items.filter(d=>d.sexe==='fille');
+  if (filter === 'msg')    items = items.filter(d=>d.autres&&d.autres.trim());
+
+  const eyeIcon = {marron:'🟤', vert:'🟢', bleu:'🔵', gris:'⚫', '':'—'};
+  const hairIcon = {brun:'🟫', blond:'🌕', chauve:'😇', noir:'⬛', roux:'🧡', '':'—'};
+
+  const wNorm = d => { const v = normW(d.poids); return v ? (v/1000).toFixed(2).replace('.',',') + ' kg' : '—'; };
+  const hNorm = d => { const v = normH(d.taille); return v ? v + ' cm' : '—'; };
+  const fmtDate = iso => new Date(iso).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+
+  grid.innerHTML = items.map(d => `
+    <div class="msg-card ${d.sexe==='fille'?'fille':''}">
+      <div class="msg-header">
+        <span class="msg-name">${d.parieurName.trim()}</span>
+        <span class="msg-sexe-badge ${d.sexe==='fille'?'fille':'garcon'}">${d.sexe==='fille'?'👧 fille':'👦 garçon'}</span>
+      </div>
+      <div class="msg-meta">
+        <span>📅 ${fmtDate(d.date)}</span>
+        <span>💙 ${d.prenom}</span>
+        <span>⚖️ ${wNorm(d)}</span>
+        <span>📏 ${hNorm(d)}</span>
+        <span>${eyeIcon[d.yeux]||'—'} yeux ${d.yeux||'—'}</span>
+        <span>${hairIcon[d.cheveux]||'—'} ${d.cheveux||'—'}</span>
+      </div>
+      ${d.autres&&d.autres.trim()?`<div class="msg-text">"${d.autres.trim()}"</div>`:''}
+    </div>
+  `).join('');
+}
+
+function filterMsg(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildCards(filter);
+}
+
+buildCards('all');
+</script>
+</body>
+</html>
