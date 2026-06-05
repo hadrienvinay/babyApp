@@ -275,6 +275,26 @@
       line-height: 1.5;
     }
 
+    /* ── PHOTOS STRIP ── */
+    .photo-strip {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding: 4px 2px 12px;
+    }
+    .photo-strip::-webkit-scrollbar { display: none; }
+    .photo-strip img {
+      height: 260px;
+      width: auto;
+      flex-shrink: 0;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      scroll-snap-align: start;
+    }
+
     /* ── LEADERBOARD ── */
     .lb-list { display:flex; flex-direction:column; gap:5px; }
     .lb-item {
@@ -462,6 +482,13 @@
   </div>
 </section>
 
+<div class="photo-strip">
+  <img src="/charlie1.jpg" alt="Charlie">
+  <img src="/charlie2.jpg" alt="Charlie">
+  <img src="/charlie3.jpg" alt="Charlie">
+  <img src="/charlie4.jpg" alt="Charlie">
+</div>
+
 <!-- ══════════════════════════════════════
      GAGNANTS
 ═══════════════════════════════════════ -->
@@ -614,7 +641,7 @@
         <canvas id="chartTaille" height="160"></canvas>
       </div>
       <p style="font-size:.78rem;color:var(--gray);margin-top:12px;text-align:center;">
-        La ligne verte représente la vraie taille de Charlie (46 cm)
+        La ligne rouge représente la vraie taille de Charlie (46 cm)
       </p>
     </div>
 
