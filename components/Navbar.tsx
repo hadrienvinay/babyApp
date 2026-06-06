@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 const NAV_ITEMS = [
   { href: '/',                label: 'Les Paris',    emoji: '' },
   { href: '/new',             label: 'Nouveau pari', emoji: '' },
-  { href: '/les-babes',       label: 'Les Babes',    emoji: '' },
+  { href: '/les-babes',          label: 'Les Babes',    emoji: '' },
+  { href: '/charlie-bilan.html', label: 'Le Bilan', emoji: '' },
  // { href: '/liste-naissance', label: 'Liste',        emoji: '🎁' },
 ];
 

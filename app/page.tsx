@@ -106,6 +106,24 @@ export default async function ParisPage() {
           </div>
         </div>
 
+        {/* ── Bilan Charlie banner ────────────────────────── */}
+        <Link
+          href="/charlie-bilan.html"
+          className="block rounded-3xl border-2 overflow-hidden transition-all hover:scale-[1.01] active:scale-[0.99]"
+          style={{ background: 'linear-gradient(135deg, #fdf2ff, #fde8f0)', borderColor: '#f0abfc', boxShadow: '0 4px 24px rgba(168,85,247,0.15)' }}
+        >
+          <div className="flex items-center gap-5 px-7 py-5">
+            <div className="text-5xl flex-shrink-0">🏆</div>
+            <div className="flex-1">
+              <div className="text-lg font-extrabold" style={{ background: 'linear-gradient(135deg, #A855F7, #EC4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                Bilan des Paris — Charlie est né !
+              </div>
+              <div className="text-sm text-gray-500 mt-0.5">Découvrez les résultats, le classement et les scores de chaque parieur</div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A855F7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+        </Link>
+
         {/* ── Photos ──────────────────────────────────────── */}
         <div className="rounded-3xl border-2 overflow-hidden" style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)', borderColor: '#FBCFE8' }}>
           <div className="flex gap-1 p-1 h-64 sm:h-72">
