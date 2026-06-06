@@ -278,21 +278,33 @@
     /* ── PHOTOS STRIP ── */
     .photo-strip {
       display: flex;
-      justify-content: center;
       gap: 12px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
-      padding: 4px 2px 12px;
+      padding: 4px 16px 12px;
+      /* justify-content: center breaks overflow-x scroll on mobile */
     }
     .photo-strip::-webkit-scrollbar { display: none; }
     .photo-strip img {
-      height: 260px;
+      height: 240px;
       width: auto;
       flex-shrink: 0;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       scroll-snap-align: start;
+    }
+    @media (max-width: 600px) {
+      .photo-strip img { height: 180px; }
+
+      /* leaderboard responsive */
+      .lb-item { flex-wrap: wrap; padding: 10px 12px; gap: 4px 8px; }
+      .lb-name {
+        min-width: 0; flex: 1;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      .lb-bar-wrap { display: none; }
+      .lb-pips { order: 10; flex: none; width: 100%; padding-left: 34px; }
     }
 
     /* ── LEADERBOARD ── */
@@ -312,7 +324,7 @@
     .lb-rank.r2 { color:#94a3b8; font-size:1.05rem; }
     .lb-rank.r3 { color:#b07644; }
     .lb-name { font-weight:600; font-size:.88rem; min-width:90px; flex-shrink:0; }
-    .lb-pips { display:flex; gap:4px; flex-wrap:wrap; flex:1; }
+    .lb-pips { display:flex; gap:4px; flex-wrap:wrap; flex:1; min-width:0; }
     .lb-pip {
       font-size:.65rem; font-weight:700; border-radius:50px;
       padding:2px 7px; background:#f3f4f6; color:#9ca3af;
